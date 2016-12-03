@@ -74,8 +74,9 @@ public class ImagePanel extends JComponent implements ActionListener {
         g2d.drawLine(dx, 0, dy, height);
 
         g2d.setColor(pendulum.getColor());
-
         g2d.draw(new Line2D.Double(toSystem(pendulum.getOnePoint()), toSystem(pendulum.getTwoPoint())));
+
+        g2d.setColor(washer.getColor());
         g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()-setting.getWidthWasher()/2,
                 toSystem(washer.getCenterWasher()).getY()-setting.getHeightWasher()/2,
                 setting.getWidthWasher(), setting.getHeightWasher()));
