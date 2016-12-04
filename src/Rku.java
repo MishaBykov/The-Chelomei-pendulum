@@ -102,26 +102,32 @@ class Rku {
         }
     }
 
-    /**
-     * public void toStep() {<br>
-     * double[][] k = new double[4][2];<br>
-     * k[0][0] = h * func1(t, parameters[0], parameters[1]);<br>
-     * k[0][1] = h * func2(t, parameters[0], parameters[1]);<br>
-     *<br>
-     * k[1][0] = h * func1(t + h / 2, parameters[0] + k[0][0] / 2, parameters[1] + k[0][1] / 2);<br>
-     * k[2][0] = h * func1(t + h / 2, parameters[0] + k[1][0] / 2, parameters[1] + k[1][1] / 2);<br>
-     * k[1][1] = h * func2(t + h / 2, parameters[0] + k[0][0] / 2, parameters[1] + k[0][1] / 2);<br>
-     * k[2][1] = h * func2(t + h / 2, parameters[0] + k[1][0] / 2, parameters[1] + k[1][1] / 2);<br>
-     *<br>
-     * k[3][0] = h * func1(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1]);<br>
-     * k[3][1] = h * func2(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1]);<br>
-     *<br>
-     * parameters[0] += 1.0 / 6 * (k[0][0] + 2 * k[1][0] + 2 * k[2][0] + k[3][0]);<br>
-     * parameters[1] += 1.0 / 6 * (k[0][1] + 2 * k[1][1] + 2 * k[2][1] + k[3][1]);<br>
-     *<br>
-     * t += h;<br>
-     } <br>
-     */
+    void toStep() {
+        for (int i = 0; i < countExample; i++) {
+            k[0][i] = h * functions(t, parameters[0], parameters[1], parameters[2], parameters[3], i);
+        }
+
+        for (int i = 1; i < 3; i++) {
+            for (int j = 0; j < countExample; j++) {
+                k[i][j] = h * functions(t + h / 2, parameters[0] + k[i - 1][0] / 2, parameters[1] + k[i - 1][1] / 2,
+                        parameters[2] + k[i - 1][2] / 2, parameters[3] + k[i - 1][3] / 2, j);
+            }
+        }
+
+        for (int i = 0; i < countExample; i++) {
+            k[3][i] = h * functions(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1],
+                    parameters[2] + k[2][0], parameters[3] + k[2][1], i);
+        }
+
+        for (int i = 0; i < countExample; i++) {
+            parameters[i] += 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
+        }
+
+        t += h;
+
+    }
+
+
      void toStep(long time) {
          while (time > 0) {
              for (int i = 0; i < countExample; i++) {

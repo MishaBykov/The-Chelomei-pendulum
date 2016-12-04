@@ -3,11 +3,12 @@ import java.awt.*;
 
 class Run {
     public static void main(String[] args) {
-        final Rku rku = new Rku(0, 0, 1, 1, 1, 1, 1, 1, 1,1, 1, 0, 0, 0, 0.001);
         Setting setting = new Setting(100, 1);
+
+        final Rku rku = new Rku(0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0, 500, 1/(setting.getSpeed()*10)); // 0.01
         Pendulum pendulum = new Pendulum(rku, Color.black);
         Washer washer = new Washer(rku, Color.black);
-        final ImagePanel imagePanel = new ImagePanel(setting, pendulum, washer, rku, 500, 500, 1);
+        final ImagePanel imagePanel = new ImagePanel(setting, pendulum, washer, rku, 500, 500, setting.getSpeed());
         final SliderText[] sliderTexts = SliderText.initMSliderText(rku);
         final PanelButton panelButton = new PanelButton(imagePanel, sliderTexts);
         final JPanel mSliderText = new JPanel(new GridLayout(0, 2));

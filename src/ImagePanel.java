@@ -16,8 +16,9 @@ public class ImagePanel extends JComponent implements ActionListener {
     private Pendulum pendulum;
     private Washer washer;
     private Rku rku;
-    private Date clock;
-    private ArrayList<Long> history = new ArrayList<>();
+
+    private long[] time = new long[2];
+
 
     ImagePanel(Setting setting, Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
         this.setting = setting;
@@ -30,11 +31,14 @@ public class ImagePanel extends JComponent implements ActionListener {
         dx = width / 2;
         dy = height / 2;
 
+
+
         setPreferredSize(new Dimension(width, height));
     }
 
     public void start() {
-        clock = new Date();
+        time[0] = System.currentTimeMillis();
+
         timer.start();
     }
 
@@ -53,12 +57,9 @@ public class ImagePanel extends JComponent implements ActionListener {
 //    }
 
     public void actionPerformed(ActionEvent event) {
-        long time = new Date().getTime() - clock.getTime();
-        history.add(time);
-        time /= setting.getSpeed();
-        clock = new Date();
-
-        rku.toStep(time);
+        time[1] = System.currentTimeMillis();
+        rku.toStep((time[1] - time[0])/10);
+        time[0] = time[1];
         pendulum.update();
         washer.update();
         repaint();
