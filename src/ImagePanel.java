@@ -58,7 +58,8 @@ public class ImagePanel extends JComponent implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        rku.toStep((time[1] - time[0])/10);
+        System.out.println((time[1] - time[0])/setting.getSpeed());
+        rku.toStep((time[1] - time[0])/setting.getSpeed());
         time[0] = time[1];
         pendulum.update();
         washer.update();

@@ -3,9 +3,9 @@ import java.awt.*;
 
 class Run {
     public static void main(String[] args) {
-        Setting setting = new Setting(100, 1);
+        Setting setting = new Setting(100, 10);
 
-        final Rku rku = new Rku(0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0, 500, 1/(setting.getSpeed()*10)); // 0.01
+        final Rku rku = new Rku(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0, 500, 1/(setting.getSpeed()*10));
         Pendulum pendulum = new Pendulum(rku, Color.black);
         Washer washer = new Washer(rku, Color.black);
         final ImagePanel imagePanel = new ImagePanel(setting, pendulum, washer, rku, 500, 500, setting.getSpeed());
