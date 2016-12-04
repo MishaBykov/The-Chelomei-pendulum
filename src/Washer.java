@@ -34,4 +34,8 @@ public class Washer {
     public Point2D.Double getCenterWasher() {
         return centerWasher;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

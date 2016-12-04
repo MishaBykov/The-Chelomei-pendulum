@@ -2,7 +2,7 @@ public class Setting {
     private double scale;
     private double widthWasher = 10;
     private double heightWasher = 10;
-    private int speed = 10;
+    private long speed;
 
     Setting(double scale, int speed){
         this.scale = scale;
@@ -13,7 +13,7 @@ public class Setting {
         return scale;
     }
 
-    public int getSpeed() {
+    public long getSpeed() {
         return speed;
     }
 

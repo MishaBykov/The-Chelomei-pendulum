@@ -122,8 +122,8 @@ class Rku {
      * t += h;<br>
      } <br>
      */
-     void toStep(/*long time*/) {
-         /*while (time > 0) {*/
+     void toStep(long time) {
+         while (time > 0) {
              for (int i = 0; i < countExample; i++) {
                  k[0][i] = h * functions(t, parameters[0], parameters[1], parameters[2], parameters[3], i);
              }
@@ -146,9 +146,9 @@ class Rku {
 
              t += h;
 
-//             time--;
+             time--;
          }
-//     }
+     }
 
     double getParameters(int index) {
         return parameters[index];

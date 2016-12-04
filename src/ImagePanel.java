@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -16,6 +17,7 @@ public class ImagePanel extends JComponent implements ActionListener {
     private Washer washer;
     private Rku rku;
     private Date clock;
+    private ArrayList<Long> history = new ArrayList<>();
 
     ImagePanel(Setting setting, Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
         this.setting = setting;
@@ -27,12 +29,12 @@ public class ImagePanel extends JComponent implements ActionListener {
         this.height = height;
         dx = width / 2;
         dy = height / 2;
-        clock = new Date();
 
         setPreferredSize(new Dimension(width, height));
     }
 
     public void start() {
+        clock = new Date();
         timer.start();
     }
 
@@ -44,19 +46,19 @@ public class ImagePanel extends JComponent implements ActionListener {
         return new Point2D.Double(dx + setting.getScale() * point.getX(), dy - setting.getScale() * point.getY());
     }
 
-    private void drawWasher(Graphics2D g2d, double len, double angle) {
+//    private void drawWasher(Graphics2D g2d, double len, double angle) {
 
 //        return new Point2D.Double(-Math.sin(angle) * setting.getScale() * len + one.getX(),
 //                -Math.cos(angle) * setting.getScale() * len + one.getY());
-    }
+//    }
 
     public void actionPerformed(ActionEvent event) {
-        /*long time =  new Date().getTime();
-            System.out.println(time - clock.getTime());
-            time = (clock.getTime() - new Date().getTime()) % setting.getSpeed();
-            clock = new Date();*/
+        long time = new Date().getTime() - clock.getTime();
+        history.add(time);
+        time /= setting.getSpeed();
+        clock = new Date();
 
-        rku.toStep(/*time*/);
+        rku.toStep(time);
         pendulum.update();
         washer.update();
         repaint();
@@ -74,8 +76,9 @@ public class ImagePanel extends JComponent implements ActionListener {
         g2d.drawLine(dx, 0, dy, height);
 
         g2d.setColor(pendulum.getColor());
-
         g2d.draw(new Line2D.Double(toSystem(pendulum.getOnePoint()), toSystem(pendulum.getTwoPoint())));
+
+        g2d.setColor(washer.getColor());
         g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()-setting.getWidthWasher()/2,
                 toSystem(washer.getCenterWasher()).getY()-setting.getHeightWasher()/2,
                 setting.getWidthWasher(), setting.getHeightWasher()));
