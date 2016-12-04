@@ -15,7 +15,6 @@ public class Washer {
         this.rku = rku;
         this.color = color;
         center = new Point2D.Double();
-        centerWasher = new Point2D.Double();
         update();
     }
 
@@ -27,8 +26,10 @@ public class Washer {
         if (x <= len)
             angle = rku.getParameters(1);
 
-        centerWasher.setLocation(-Math.sin(angle) * (x) + center.getX(),
-                Math.cos(angle) * (x) + center.getY());
+        centerWasher = Setting.findTwoPoint(center, x, angle);
+
+//                .setLocation(-Math.sin(angle) * (x) + center.getX(),
+//                Math.cos(angle) * (x) + center.getY());
     }
 
     public Point2D.Double getCenterWasher() {
