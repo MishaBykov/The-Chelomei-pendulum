@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.geom.*;
 
-public class Washer {
+class Washer {
     private Color color;
 
     private Rku rku;

@@ -2,11 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.util.ArrayList;
-import java.util.Date;
 
 
-public class ImagePanel extends JComponent implements ActionListener {
+class ImagePanel extends JComponent implements ActionListener {
     private Timer timer;
     private int width;
     private int height;
@@ -56,13 +54,17 @@ public class ImagePanel extends JComponent implements ActionListener {
 //                -Math.cos(angle) * setting.getScale() * len + one.getY());
 //    }
 
+    public void repaintComponent(){
+        pendulum.update();
+        washer.update();
+        repaint();
+    }
+
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
         rku.toStep((time[1] - time[0])/setting.getSpeed());
         time[0] = time[1];
-        pendulum.update();
-        washer.update();
-        repaint();
+        repaintComponent();
     }
 
     @Override
