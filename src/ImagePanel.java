@@ -36,7 +36,6 @@ class ImagePanel extends JComponent implements ActionListener {
 
     public void start() {
         time[0] = System.currentTimeMillis();
-
         timer.start();
     }
 
@@ -45,14 +44,11 @@ class ImagePanel extends JComponent implements ActionListener {
     }
 
     private Point2D.Double toSystem(Point2D.Double point){
-        return new Point2D.Double(dx + setting.getScale() * point.getX(), dy - setting.getScale() * point.getY());
+        return new Point2D.Double(
+                dx + setting.getScale() * point.getX(),
+                dy - setting.getScale() * point.getY()
+        );
     }
-
-//    private void drawWasher(Graphics2D g2d, double len, double angle) {
-
-//        return new Point2D.Double(-Math.sin(angle) * setting.getScale() * len + one.getX(),
-//                -Math.cos(angle) * setting.getScale() * len + one.getY());
-//    }
 
     public void repaintComponent(){
         pendulum.update();

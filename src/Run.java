@@ -6,7 +6,7 @@ public class Run {
         Setting setting = new Setting(100, 10);
 
         final Rku rku = new Rku(0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1.0/(setting.getSpeed()*10));
-        Pendulum pendulum = new Pendulum(rku, Color.black);
+        Pendulum pendulum = new Pendulum(rku, Color.magenta);
         Washer washer = new Washer(rku, Color.black);
         final ImagePanel imagePanel = new ImagePanel(setting, pendulum, washer, rku, 500, 500, setting.getSpeed());
         final SliderText[] sliderTexts = SliderText.initMSliderText(rku);
