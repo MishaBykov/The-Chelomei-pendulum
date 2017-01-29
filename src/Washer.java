@@ -1,7 +1,9 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Observable;
+import java.util.Observer;
 
-class Washer {
+class Washer implements Observer{
     private Color color;
 
     private Rku rku;
@@ -38,5 +40,10 @@ class Washer {
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

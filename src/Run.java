@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
 
 public class Run {
     public static void main(String[] args) {
