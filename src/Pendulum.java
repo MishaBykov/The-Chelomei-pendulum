@@ -1,7 +1,9 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Observable;
+import java.util.Observer;
 
-class Pendulum {
+class Pendulum implements Observer{
     private Color color;
 
     private Point2D.Double onePoint;
@@ -12,17 +14,6 @@ class Pendulum {
         this.rku = rku;
         onePoint = new Point2D.Double();
         this.color = color;
-        update();
-    }
-
-    public void update() {
-        double angle = rku.getParameters(1);
-        double len = rku.getParameters(7);
-        onePoint.setLocation(rku.suspensionX(), rku.suspensionY());
-        twoPoint = Setting.findTwoPoint(onePoint, len*2, angle);
-
-//                .setLocation(-Math.sin(angle) * len * 2 + onePoint.getX(),
-//                Math.cos(angle) * len * 2 + onePoint.getY());
     }
 
     public Color getColor() {
@@ -35,5 +26,13 @@ class Pendulum {
 
     public Point2D.Double getTwoPoint() {
         return twoPoint;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        double angle = rku.getParameters(1);
+        double len = rku.getParameters(7);
+        onePoint.setLocation(rku.suspensionX(), rku.suspensionY());
+        twoPoint = Setting.findTwoPoint(onePoint, len*2, angle);
     }
 }

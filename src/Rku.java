@@ -1,3 +1,5 @@
+import java.util.Observable;
+
 /**
  * M — Масса стержня,<br>
  * m — масса шайбы,<br>
@@ -31,7 +33,7 @@
  * parameters[14] = nu<br>
  */
 
-class Rku {
+class Rku extends Observable{
     private double h, t = 0;
     private double[] parameters = new double[15];
     private double[][] k = new double[4][4];
@@ -154,6 +156,7 @@ class Rku {
 
              time--;
          }
+         this.notifyObservers();
      }
 
     double getParameters(int index) {
