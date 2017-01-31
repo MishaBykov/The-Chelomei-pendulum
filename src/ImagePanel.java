@@ -50,17 +50,11 @@ class ImagePanel extends JComponent implements ActionListener {
         );
     }
 
-    public void repaintComponent(){
-        pendulum.update();
-        washer.update();
-        repaint();
-    }
-
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
         rku.toStep((time[1] - time[0])/setting.getSpeed());
         time[0] = time[1];
-        repaintComponent();
+        repaint();
     }
 
     @Override

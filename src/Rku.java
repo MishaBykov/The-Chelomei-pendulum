@@ -126,7 +126,7 @@ class Rku extends Observable{
         }
 
         t += h;
-
+        this.notifyObservers();
     }
 
 
@@ -165,6 +165,7 @@ class Rku extends Observable{
 
     void setParameters(double parameter, int index) {
         parameters[index] = parameter;
+        this.notifyObservers();
     }
 
 }

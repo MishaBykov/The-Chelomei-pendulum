@@ -16,7 +16,8 @@ class Washer implements Observer{
     Washer(Rku rku, Color color) {
         this.rku = rku;
         this.color = color;
-        center = new Point2D.Double();
+        center = new Point2D.Double(rku.suspensionX(), rku.suspensionY());
+        update(null, null);
     }
 
     public Point2D.Double getCenterWasher() {
