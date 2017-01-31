@@ -16,7 +16,7 @@ class Washer implements Observer{
     Washer(Rku rku, Color color) {
         this.rku = rku;
         this.color = color;
-        center = new Point2D.Double(rku.suspensionX(), rku.suspensionY());
+        center = new Point2D.Double();
         update(null, null);
     }
 
@@ -28,14 +28,31 @@ class Washer implements Observer{
         return color;
     }
 
+    public void setX(double x) {
+        if (x >= 0 && x <= len)
+            this.x = x;
+        else
+            if (x < 0)
+                this.x = 0;
+            else
+                this.x = len;
+    }
+
+    public void setLen(double len) {
+        this.len = len*2;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
-        x = rku.getParameters(0);
-        len = rku.getParameters(7) * 2;
+        setLen(rku.getParameters(7));
+        setX(rku.getParameters(0));
         center.setLocation(rku.suspensionX(), rku.suspensionY());
 
-        if (x <= len)
-            angle = rku.getParameters(1);
+        setAngle(rku.getParameters(1));
 
         centerWasher = Setting.findTwoPoint(center, x, angle);
     }

@@ -6,6 +6,8 @@ import java.util.Observer;
 class Pendulum implements Observer{
     private Color color;
 
+    private double length;
+    private double angle;
     private Point2D.Double onePoint;
     private Point2D.Double twoPoint;
     private Rku rku;
@@ -30,11 +32,23 @@ class Pendulum implements Observer{
         return twoPoint;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setOnePoint(double x, double y) {
+        onePoint.setLocation(x ,y);
+    }
+
+    public void setTwoPoint(double x, double y) {
+        twoPoint.setLocation(x, y);
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         double angle = rku.getParameters(1);
         double len = rku.getParameters(7);
-        onePoint.setLocation(rku.suspensionX(), rku.suspensionY());
+        setOnePoint(rku.suspensionX(), rku.suspensionY());
         twoPoint = Setting.findTwoPoint(onePoint, len*2, angle);
     }
 }

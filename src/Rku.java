@@ -1,3 +1,10 @@
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -27,13 +34,15 @@ import java.util.Observable;
  * parameters[8] = k1<br>
  * parameters[9] = k2<br>
  * parameters[10] = M<br>
- * parameters[11] = 9.8<br>
+ * parameters[11] = g<br>
  * parameters[12] = alpha<br>
  * parameters[13] = theta<br>
  * parameters[14] = nu<br>
  */
 
-class Rku extends Observable{
+class Rku extends Observable {
+
+
     private double h, t = 0;
     private double[] parameters = new double[15];
     private double[][] k = new double[4][4];
@@ -43,8 +52,7 @@ class Rku extends Observable{
 
     Rku(double x, double phi, double a, double b, double I0, double I1,
         double m, double L, double k1, double k2, double M, double alpha,
-        double theta, double nu, double step)
-    {
+        double theta, double nu, double step) {
         countExample = 4;
         parameters[0] = x;
         parameters[1] = phi;
@@ -65,21 +73,27 @@ class Rku extends Observable{
     }
 
 
-
     private double functions(double t, double x, double phi, double a, double b, int id) {
-        switch (id){
+        switch (id) {
             case 0:
                 return a;
             case 1:
                 return b;
             case 2:
-                return parameters[0]*Math.pow(b, 2) - parameters[9]*a - (parameters[11]*f(1, t))*Math.cos(phi) - f(2, t)*Math.sin(phi);
+                return x * Math.pow(b, 2)
+                        - parameters[9] * a
+                        - (parameters[11] + f(1, t)) * Math.cos(phi)
+                        - f(2, t) * Math.sin(phi);
             case 3:
-                return (-2*parameters[6]*x*a*b - parameters[8]*b + (parameters[10]*parameters[7] +
-                        parameters[6]*x)*(parameters[11] + f(1, t))*Math.sin(phi) - (parameters[10]*parameters[7] +
-                        parameters[6]*x)*f(2, t)*Math.cos(phi))
-                        /
-                        (parameters[4] + parameters[5]+ parameters[6]*Math.pow(x, 2));
+                return (-2 * parameters[6] * x * a * b
+                        - parameters[8] * b
+                        + (parameters[10] * parameters[7] + parameters[6] * x) * (parameters[11] + f(1, t)) * Math.sin(phi)
+                        - (parameters[10] * parameters[7] + parameters[6] * x) * f(2, t) * Math.cos(phi)
+                )
+                        / (parameters[4]
+                        + parameters[5]
+                        + parameters[6] * Math.pow(x, 2)
+                );
             default:
                 return -1;
         }
@@ -93,12 +107,12 @@ class Rku extends Observable{
         return parameters[12] * Math.sin(parameters[13] * t) * Math.cos(parameters[14]);
     }
 
-    private double f(int id, double t){
-        switch (id){
+    private double f(int id, double t) {
+        switch (id) {
             case 1:
-                return -Math.pow(parameters[14], 2)*parameters[12]*Math.sin(parameters[13])*Math.sin(parameters[14]*t);
+                return -Math.pow(parameters[14], 2) * parameters[12] * Math.sin(parameters[13]) * Math.sin(parameters[14] * t);
             case 2:
-                return -Math.pow(parameters[14], 2)*parameters[12]*Math.sin(parameters[13])*Math.cos(parameters[14]*t);
+                return -Math.pow(parameters[14], 2) * parameters[12] * Math.sin(parameters[13]) * Math.cos(parameters[14] * t);
             default:
                 return -1;
         }
@@ -126,38 +140,48 @@ class Rku extends Observable{
         }
 
         t += h;
+        this.setChanged();
         this.notifyObservers();
     }
 
 
-     void toStep(long time) {
-         while (time > 0) {
-             for (int i = 0; i < countExample; i++) {
-                 k[0][i] = h * functions(t, parameters[0], parameters[1], parameters[2], parameters[3], i);
-             }
+    void toStep(long time) {
+        while (time > 0) {
+            for (int i = 0; i < countExample; i++) {
+                k[0][i] = h * functions(t, parameters[0], parameters[1], parameters[2], parameters[3], i);
+            }
 
-             for (int i = 1; i < 3; i++) {
-                 for (int j = 0; j < countExample; j++) {
-                     k[i][j] = h * functions(t + h / 2, parameters[0] + k[i - 1][0] / 2, parameters[1] + k[i - 1][1] / 2,
-                             parameters[2] + k[i - 1][2] / 2, parameters[3] + k[i - 1][3] / 2, j);
-                 }
-             }
+            for (int i = 1; i < 3; i++) {
+                for (int j = 0; j < countExample; j++) {
+                    k[i][j] = h * functions(t + h / 2, parameters[0] + k[i - 1][0] / 2, parameters[1] + k[i - 1][1] / 2,
+                            parameters[2] + k[i - 1][2] / 2, parameters[3] + k[i - 1][3] / 2, j);
+                }
+            }
 
-             for (int i = 0; i < countExample; i++) {
-                 k[3][i] = h * functions(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1],
-                         parameters[2] + k[2][0], parameters[3] + k[2][1], i);
-             }
+            for (int i = 0; i < countExample; i++) {
+                k[3][i] = h * functions(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1],
+                        parameters[2] + k[2][0], parameters[3] + k[2][1], i);
+            }
 
-             for (int i = 0; i < countExample; i++) {
-                 parameters[i] += 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
-             }
+            for (int i = 0; i < countExample; i++) {
+                parameters[i] += 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
+            }
 
-             t += h;
+            t += h;
 
-             time--;
-         }
-         this.notifyObservers();
-     }
+            time--;
+
+            try(FileWriter writer = new FileWriter("output.txt", true))
+            {
+                writer.write(Double.toString(parameters[0]));
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        this.setChanged();
+        this.notifyObservers();
+    }
 
     double getParameters(int index) {
         return parameters[index];
@@ -165,6 +189,7 @@ class Rku extends Observable{
 
     void setParameters(double parameter, int index) {
         parameters[index] = parameter;
+        this.setChanged();
         this.notifyObservers();
     }
 
