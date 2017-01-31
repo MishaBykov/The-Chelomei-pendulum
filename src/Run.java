@@ -1,12 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Observable;
 
 public class Run {
     public static void main(String[] args) {
         Setting setting = new Setting(100, 10);
 
-        final Rku rku = new Rku(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1.0/(setting.getSpeed()*10));
+        final Rku rku = new Rku(0, 0, 0, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1.0/(setting.getSpeed()*10));
         Pendulum pendulum = new Pendulum(rku, Color.magenta);
         Washer washer = new Washer(rku, Color.red);
         rku.addObserver(pendulum);

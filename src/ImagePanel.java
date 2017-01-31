@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.io.IOException;
 
 
 class ImagePanel extends JComponent implements ActionListener {

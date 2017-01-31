@@ -29,13 +29,15 @@ class Washer implements Observer{
     }
 
     public void setX(double x) {
-        if (x >= 0 && x <= len)
+        /*if (x >= 0 && x <= len)
             this.x = x;
         else
             if (x < 0)
                 this.x = 0;
             else
-                this.x = len;
+                this.x = len;*/
+
+        this.x = x;
     }
 
     public void setLen(double len) {

@@ -1,10 +1,3 @@
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -41,8 +34,6 @@ import java.util.Observable;
  */
 
 class Rku extends Observable {
-
-
     private double h, t = 0;
     private double[] parameters = new double[15];
     private double[][] k = new double[4][4];
@@ -167,17 +158,12 @@ class Rku extends Observable {
                 parameters[i] += 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
             }
 
+            if (parameters[0] < 0)
+                parameters[0] = 0;
+
             t += h;
 
             time--;
-
-            try(FileWriter writer = new FileWriter("output.txt", true))
-            {
-                writer.write(Double.toString(parameters[0]));
-                writer.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         this.setChanged();
         this.notifyObservers();
