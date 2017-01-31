@@ -13,6 +13,7 @@ class Pendulum implements Observer{
     Pendulum(Rku rku, Color color) {
         this.rku = rku;
         onePoint = new Point2D.Double();
+        twoPoint = Setting.findTwoPoint(onePoint, rku.getParameters(7)*2, rku.getParameters(1));
         this.color = color;
     }
 
