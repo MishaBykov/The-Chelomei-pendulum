@@ -17,96 +17,18 @@ import java.util.Observable;
  * f1(t) — вертикальная составляющая колебаний точки подвеса,<br>
  * f2(t) — горизонтальная составляющая колебаний точки подвеса.<br>
  */
-public class Rku extends Observable {
+public class Rku {
     private double h, t = 0;
     private double[] parameters = new double[15];
     private double[][] k = new double[4][4];
+    Functions functions;
 
     int countExample;
 
- /**
- * parameters[0] = x<br>
- * parameters[1] = phi<br>
- * parameters[2] = a<br>
- * parameters[3] = b<br>
- * parameters[4] = I0<br>
- * parameters[5] = I1<br>
- * parameters[6] = m<br>
- * parameters[7] = L<br>
- * parameters[8] = k1<br>
- * parameters[9] = k2<br>
- * parameters[10] = M<br>
- * parameters[11] = g<br>
- * parameters[12] = alpha<br>
- * parameters[13] = theta<br>
- * parameters[14] = nu<br>
- */
-    Rku(double x, double phi, double a, double b, double I0, double I1,
-        double m, double L, double k1, double k2, double M, double alpha,
-        double theta, double nu, double step) {
-        countExample = 4;
-        parameters[0] = x;
-        parameters[1] = phi;
-        parameters[2] = a;
-        parameters[3] = b;
-        parameters[4] = I0;
-        parameters[5] = I1;
-        parameters[6] = m;
-        parameters[7] = L;
-        parameters[8] = k1;
-        parameters[9] = k2;
-        parameters[10] = M;
-        parameters[11] = 9.8; // g
-        parameters[12] = alpha;
-        parameters[13] = nu;
-        parameters[14] = theta;
+    Rku(Functions functions, double step) {
+        countExample = functions.getCountFunctions();
+        this.functions = functions;
         h = step;
-    }
-
-
-    private double functions(double t, double x, double phi, double a, double b, int id) {
-        switch (id) {
-            case 0:
-                return a;
-            case 1:
-                return b;
-            case 2:
-                return x * Math.pow(b, 2)
-                        - parameters[9] * a
-                        - (parameters[11] + f(1, t)) * Math.cos(phi)
-                        - f(2, t) * Math.sin(phi);
-            case 3:
-                return (-2 * parameters[6] * x * a * b
-                        - parameters[8] * b
-                        + (parameters[10] * parameters[7] + parameters[6] * x) * (parameters[11] + f(1, t)) * Math.sin(phi)
-                        - (parameters[10] * parameters[7] + parameters[6] * x) * f(2, t) * Math.cos(phi)
-                )
-                        / (parameters[4]
-                        + parameters[5]
-                        + parameters[6] * Math.pow(x, 2)
-                );
-            default:
-                return -1;
-        }
-    }
-
-    double suspensionX(double alpha, double theta, double nu) {
-        return alpha * Math.sin(theta * t) * Math.sin(nu);
-    }
-
-    double suspensionY(double alpha, double theta, double nu){
-        return alpha * Math.sin(theta * t) * Math.cos(nu);
-    }
-
-    private double f(int id, double t) {
-        switch (id) {
-            case 1:
-                return -Math.pow(parameters[14], 2) * parameters[12] * Math.sin(parameters[13]) * Math.sin(parameters[14] * t);
-            case 2:
-                return -Math.pow(parameters[14], 2) * parameters[12] * Math.sin(parameters[13]) * Math.cos(parameters[14] * t);
-            default:
-                return -1;
-        }
     }
 
     void toStep() {
@@ -167,20 +89,6 @@ public class Rku extends Observable {
         }
         this.setChanged();
         this.notifyObservers();
-    }
-
-    double getParameters(int index) {
-        return parameters[index];
-    }
-
-    void setParameters(double parameter, int index) {
-        parameters[index] = parameter;
-        this.setChanged();
-        this.notifyObservers();
-    }
-
-    int getCountParameters() {
-        return parameters.length;
     }
 }
 
