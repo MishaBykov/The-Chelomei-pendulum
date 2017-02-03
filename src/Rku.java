@@ -19,11 +19,10 @@ import java.util.Observable;
  */
 public class Rku {
     private double h, t = 0;
-    private double[] parameters = new double[15];
     private double[][] k = new double[4][4];
-    Functions functions;
+    private Functions functions;
 
-    int countExample;
+    private int countExample;
 
     Rku(Functions functions, double step) {
         countExample = functions.getCountFunctions();
@@ -31,64 +30,81 @@ public class Rku {
         h = step;
     }
 
-    void toStep() {
+    public void toStep() {
         for (int i = 0; i < countExample; i++) {
-            k[0][i] = h * functions(t, parameters[0], parameters[1], parameters[2], parameters[3], i);
+            k[0][i] = h * functions.getResultFunction(t, i,
+                    functions.getParameter(0),
+                    functions.getParameter(1),
+                    functions.getParameter(2),
+                    functions.getParameter(3));
         }
 
         for (int i = 1; i < 3; i++) {
             for (int j = 0; j < countExample; j++) {
-                k[i][j] = h * functions(t + h / 2, parameters[0] + k[i - 1][0] / 2, parameters[1] + k[i - 1][1] / 2,
-                        parameters[2] + k[i - 1][2] / 2, parameters[3] + k[i - 1][3] / 2, j);
+                k[i][j] = h * functions.getResultFunction(t + h / 2, j,
+                        functions.getParameter(0) + k[i - 1][0] / 2,
+                        functions.getParameter(1) + k[i - 1][1] / 2,
+                        functions.getParameter(2) + k[i - 1][2] / 2,
+                        functions.getParameter(3) + k[i - 1][3] / 2);
             }
         }
 
         for (int i = 0; i < countExample; i++) {
-            k[3][i] = h * functions(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1],
-                    parameters[2] + k[2][0], parameters[3] + k[2][1], i);
+            k[3][i] = h * functions.getResultFunction(t + h, i,
+                    functions.getParameter(0) + k[2][0],
+                    functions.getParameter(1) + k[2][1],
+                    functions.getParameter(2) + k[2][0],
+                    functions.getParameter(3) + k[2][1]);
         }
 
         for (int i = 0; i < countExample; i++) {
-            parameters[i] += 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
+            functions.setParameter(i, 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]));
         }
 
         t += h;
-        this.setChanged();
-        this.notifyObservers();
     }
 
 
-    void toStep(long time) {
+    public void toStep(long time) {
         while (time > 0) {
             for (int i = 0; i < countExample; i++) {
-                k[0][i] = h * functions(t, parameters[0], parameters[1], parameters[2], parameters[3], i);
+                k[0][i] = h * functions.getResultFunction(t, i, 
+                        functions.getParameter(0), 
+                        functions.getParameter(1),
+                        functions.getParameter(2),
+                        functions.getParameter(3));
             }
 
             for (int i = 1; i < 3; i++) {
                 for (int j = 0; j < countExample; j++) {
-                    k[i][j] = h * functions(t + h / 2, parameters[0] + k[i - 1][0] / 2, parameters[1] + k[i - 1][1] / 2,
-                            parameters[2] + k[i - 1][2] / 2, parameters[3] + k[i - 1][3] / 2, j);
+                    k[i][j] = h * functions.getResultFunction(t + h / 2, j,
+                            functions.getParameter(0) + k[i - 1][0] / 2,
+                            functions.getParameter(1) + k[i - 1][1] / 2,
+                            functions.getParameter(2) + k[i - 1][2] / 2,
+                            functions.getParameter(3) + k[i - 1][3] / 2);
                 }
             }
 
             for (int i = 0; i < countExample; i++) {
-                k[3][i] = h * functions(t + h, parameters[0] + k[2][0], parameters[1] + k[2][1],
-                        parameters[2] + k[2][0], parameters[3] + k[2][1], i);
+                k[3][i] = h * functions.getResultFunction(t + h, i,
+                        functions.getParameter(0) + k[2][0],
+                        functions.getParameter(1) + k[2][1],
+                        functions.getParameter(2) + k[2][0],
+                        functions.getParameter(3) + k[2][1]);
             }
 
             for (int i = 0; i < countExample; i++) {
-                parameters[i] += 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
+                functions.setParameter(i, 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]));
             }
-
-            if (parameters[0] < 0)
-                parameters[0] = 0;
 
             t += h;
 
             time--;
         }
-        this.setChanged();
-        this.notifyObservers();
+    }
+
+    public double getT() {
+        return t;
     }
 }
 

@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public interface Functions {
-    double getParameters(int index);
-    void setParameters(double parameter, int index);
+    double getParameter(int index);
+    void setParameter(int index, double parameter);
 
     double getResultFunction(double t, int id, double ... args);
     int getCountFunctions();

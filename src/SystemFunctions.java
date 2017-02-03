@@ -80,12 +80,12 @@ public class SystemFunctions extends Observable implements Functions{
     }
 
     @Override
-    public double getParameters(int index) {
+    public double getParameter(int index) {
         return parameters[index];
     }
 
     @Override
-    public void setParameters(double parameter, int index) {
+    public void setParameter(int index, double parameter) {
         parameters[index] = parameter;
         this.setChanged();
         this.notifyObservers();
