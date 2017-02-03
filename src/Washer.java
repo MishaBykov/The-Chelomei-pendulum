@@ -1,9 +1,7 @@
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Washer implements Observer{
+public class Washer {
     private Color color;
 
     private Rku rku;
@@ -17,7 +15,6 @@ public class Washer implements Observer{
         this.rku = rku;
         this.color = color;
         center = new Point2D.Double();
-        update(null, null);
     }
 
     public Point2D.Double getCenterWasher() {
@@ -29,14 +26,6 @@ public class Washer implements Observer{
     }
 
     public void setX(double x) {
-        /*if (x >= 0 && x <= len)
-            this.x = x;
-        else
-            if (x < 0)
-                this.x = 0;
-            else
-                this.x = len;*/
-
         this.x = x;
     }
 
@@ -48,6 +37,7 @@ public class Washer implements Observer{
         this.angle = angle;
     }
 
+    /*
     @Override
     public void update(Observable o, Object arg) {
         setLen(rku.getParameters(7));
@@ -58,4 +48,5 @@ public class Washer implements Observer{
 
         centerWasher = Setting.findTwoPoint(center, x, angle);
     }
+    */
 }

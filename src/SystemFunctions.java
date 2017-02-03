@@ -1,6 +1,4 @@
-import java.util.Observable;
-
-public class SystemFunctions extends Observable implements Functions{
+public class SystemFunctions implements Functions{
     double[] parameters;
 
 
@@ -87,8 +85,6 @@ public class SystemFunctions extends Observable implements Functions{
     @Override
     public void setParameter(int index, double parameter) {
         parameters[index] = parameter;
-        this.setChanged();
-        this.notifyObservers();
     }
 
     @Override

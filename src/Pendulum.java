@@ -1,11 +1,7 @@
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.Observable;
-import java.util.Observer;
 
-import Estimation.*;
-
-public class Pendulum implements Observer{
+public class Pendulum {
     private Color color;
 
     private double length;
@@ -18,8 +14,6 @@ public class Pendulum implements Observer{
         this.rku = rku;
         onePoint = new Point2D.Double();
         this.color = color;
-
-        update(null, null);
     }
 
     public Color getColor() {
@@ -34,6 +28,14 @@ public class Pendulum implements Observer{
         return twoPoint;
     }
 
+    public double getAngle() {
+        return angle;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }
@@ -46,11 +48,20 @@ public class Pendulum implements Observer{
         twoPoint.setLocation(x, y);
     }
 
-    @Override
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    /*
     public void update(Observable o, Object arg) {
         double angle = rku.getParameters(1);
-        double len = rku.getParameters(7);
+        double len = rku.getParameters(7)*2;
         setOnePoint(rku.suspensionX(), rku.suspensionY());
-        twoPoint = Setting.findTwoPoint(onePoint, len*2, angle);
+        twoPoint = Setting.findTwoPoint(onePoint, len, angle);
     }
+    */
 }
