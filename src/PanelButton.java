@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class PanelButton {
+public class PanelButton {
     public JPanel panel = new JPanel();
     private ImagePanel imagePanel;
     private final JButton buttonStartStop = new JButton();
@@ -35,7 +35,7 @@ class PanelButton {
         }
     };
 
-    PanelButton(final ImagePanel imagePanel, SliderText[] masSliderText) {
+    public PanelButton(final ImagePanel imagePanel, SliderText[] masSliderText) {
         this.imagePanel = imagePanel;
         this.masSliderText = masSliderText;
         GridLayout gl = new GridLayout(3, 1);

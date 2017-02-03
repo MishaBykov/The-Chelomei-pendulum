@@ -16,6 +16,15 @@ import java.util.Observable;
  * k2x' — сила трения шайбы о стержень,<br>
  * f1(t) — вертикальная составляющая колебаний точки подвеса,<br>
  * f2(t) — горизонтальная составляющая колебаний точки подвеса.<br>
+ */
+public class Rku extends Observable {
+    private double h, t = 0;
+    private double[] parameters = new double[15];
+    private double[][] k = new double[4][4];
+
+    int countExample;
+
+ /**
  * parameters[0] = x<br>
  * parameters[1] = phi<br>
  * parameters[2] = a<br>
@@ -32,15 +41,6 @@ import java.util.Observable;
  * parameters[13] = theta<br>
  * parameters[14] = nu<br>
  */
-
-public class Rku extends Observable {
-    private double h, t = 0;
-    private double[] parameters = new double[15];
-    private double[][] k = new double[4][4];
-
-    final int countParameters = parameters.length;
-    int countExample;
-
     Rku(double x, double phi, double a, double b, double I0, double I1,
         double m, double L, double k1, double k2, double M, double alpha,
         double theta, double nu, double step) {
@@ -90,12 +90,12 @@ public class Rku extends Observable {
         }
     }
 
-    double suspensionX() {
-        return parameters[12] * Math.sin(parameters[13] * t) * Math.sin(parameters[14]);
+    double suspensionX(double alpha, double theta, double nu) {
+        return alpha * Math.sin(theta * t) * Math.sin(nu);
     }
 
-    double suspensionY() {
-        return parameters[12] * Math.sin(parameters[13] * t) * Math.cos(parameters[14]);
+    double suspensionY(double alpha, double theta, double nu){
+        return alpha * Math.sin(theta * t) * Math.cos(nu);
     }
 
     private double f(int id, double t) {
@@ -179,5 +179,8 @@ public class Rku extends Observable {
         this.notifyObservers();
     }
 
+    int getCountParameters() {
+        return parameters.length;
+    }
 }
 

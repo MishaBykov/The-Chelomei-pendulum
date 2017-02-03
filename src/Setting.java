@@ -1,6 +1,6 @@
 import java.awt.geom.Point2D;
 
-class Setting {
+public class Setting {
     private static double widthWasher = 10;
     private static double heightWasher = 10;
     private static double scale = 100;

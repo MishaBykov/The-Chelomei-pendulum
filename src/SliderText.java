@@ -2,12 +2,12 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 
-class SliderText extends JFrame {
+public class SliderText extends JFrame {
 
-    final JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    public final JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-    final JSlider slider = new JSlider();
-    final JTextField textField = new JTextField();
+    private final JSlider slider = new JSlider();
+    private final JTextField textField = new JTextField();
     private int idParameter;
     private Rku rku;
     private double scale;
@@ -87,12 +87,12 @@ class SliderText extends JFrame {
         }
     }
 
-//  x, phi, a, b, I1,
+//  x, phi, Estimation, b, I1,
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
     public static SliderText[] initMSliderText(Rku rku) {
-        SliderText[] mSL = new SliderText[rku.countParameters];
+        SliderText[] mSL = new SliderText[rku.getCountParameters()];
         mSL[0] = new SliderText(rku, 0, "x", 1);
         mSL[1] = new SliderText(rku, 1, "phi", 1);
         mSL[2] = new SliderText(rku, 2, "a", 1);

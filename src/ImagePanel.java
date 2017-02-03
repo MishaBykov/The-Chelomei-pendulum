@@ -3,8 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-
-class ImagePanel extends JComponent implements ActionListener {
+public class ImagePanel extends JComponent implements ActionListener {
     private Timer timer;
     private int width;
     private int height;
@@ -17,7 +16,7 @@ class ImagePanel extends JComponent implements ActionListener {
     private long[] time = new long[2];
 
 
-    ImagePanel(Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
+    public ImagePanel(Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
         this.pendulum = pendulum;
         this.washer = washer;
         this.rku = rku;
@@ -50,7 +49,7 @@ class ImagePanel extends JComponent implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        rku.toStep((time[1] - time[0])/Setting.getSpeedDown());
+        rku.toStep((time[1] - time[0])/ Setting.getSpeedDown());
         time[0] = time[1];
         repaint();
     }
@@ -70,8 +69,8 @@ class ImagePanel extends JComponent implements ActionListener {
         g2d.draw(new Line2D.Double(toSystem(pendulum.getOnePoint()), toSystem(pendulum.getTwoPoint())));
 
         g2d.setColor(washer.getColor());
-        g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()-Setting.getWidthWasher()/2,
-                toSystem(washer.getCenterWasher()).getY()-Setting.getHeightWasher()/2,
+        g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()- Setting.getWidthWasher()/2,
+                toSystem(washer.getCenterWasher()).getY()- Setting.getHeightWasher()/2,
                 Setting.getWidthWasher(), Setting.getHeightWasher()));
     }
 }

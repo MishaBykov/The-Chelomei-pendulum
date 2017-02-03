@@ -3,7 +3,9 @@ import java.awt.geom.*;
 import java.util.Observable;
 import java.util.Observer;
 
-class Pendulum implements Observer{
+import Estimation.*;
+
+public class Pendulum implements Observer{
     private Color color;
 
     private double length;
@@ -12,7 +14,7 @@ class Pendulum implements Observer{
     private Point2D.Double twoPoint;
     private Rku rku;
 
-    Pendulum(Rku rku, Color color) {
+    public Pendulum(Rku rku, Color color) {
         this.rku = rku;
         onePoint = new Point2D.Double();
         this.color = color;

@@ -3,7 +3,7 @@ import java.awt.geom.*;
 import java.util.Observable;
 import java.util.Observer;
 
-class Washer implements Observer{
+public class Washer implements Observer{
     private Color color;
 
     private Rku rku;
@@ -13,7 +13,7 @@ class Washer implements Observer{
     private Point2D.Double center;
     private Point2D.Double centerWasher;
 
-    Washer(Rku rku, Color color) {
+    public Washer(Rku rku, Color color) {
         this.rku = rku;
         this.color = color;
         center = new Point2D.Double();
