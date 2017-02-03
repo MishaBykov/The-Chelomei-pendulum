@@ -1,29 +1,26 @@
 import java.awt.geom.Point2D;
 
 class Setting {
-    private double widthWasher = 10;
-    private double heightWasher = 10;
-    private double scale;
-    private int speed;
+    private static double widthWasher = 10;
+    private static double heightWasher = 10;
+    private static double scale = 100;
+    private static int speedDown = 10;
 
-    Setting(double scale, int speed){
-        this.scale = scale;
-        this.speed = speed;
-    }
+    Setting(){}
 
-    public double getScale() {
+    public static double getScale() {
         return scale;
     }
 
-    public int getSpeed() {
-        return speed;
+    public static int getSpeedDown() {
+        return speedDown;
     }
 
-    public double getHeightWasher() {
+    public static double getHeightWasher() {
         return heightWasher;
     }
 
-    public double getWidthWasher() {
+    public static double getWidthWasher() {
         return widthWasher;
     }
 

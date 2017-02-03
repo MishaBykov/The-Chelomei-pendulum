@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.IOException;
 
 
 class ImagePanel extends JComponent implements ActionListener {
@@ -11,7 +10,6 @@ class ImagePanel extends JComponent implements ActionListener {
     private int height;
     private int dx;
     private int dy;
-    private Setting setting;
     private Pendulum pendulum;
     private Washer washer;
     private Rku rku;
@@ -19,8 +17,7 @@ class ImagePanel extends JComponent implements ActionListener {
     private long[] time = new long[2];
 
 
-    ImagePanel(Setting setting, Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
-        this.setting = setting;
+    ImagePanel(Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
         this.pendulum = pendulum;
         this.washer = washer;
         this.rku = rku;
@@ -46,14 +43,14 @@ class ImagePanel extends JComponent implements ActionListener {
 
     private Point2D.Double toSystem(Point2D.Double point){
         return new Point2D.Double(
-                dx + setting.getScale() * point.getX(),
-                dy - setting.getScale() * point.getY()
+                dx + Setting.getScale() * point.getX(),
+                dy - Setting.getScale() * point.getY()
         );
     }
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        rku.toStep((time[1] - time[0])/setting.getSpeed());
+        rku.toStep((time[1] - time[0])/Setting.getSpeedDown());
         time[0] = time[1];
         repaint();
     }
@@ -73,8 +70,8 @@ class ImagePanel extends JComponent implements ActionListener {
         g2d.draw(new Line2D.Double(toSystem(pendulum.getOnePoint()), toSystem(pendulum.getTwoPoint())));
 
         g2d.setColor(washer.getColor());
-        g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()-setting.getWidthWasher()/2,
-                toSystem(washer.getCenterWasher()).getY()-setting.getHeightWasher()/2,
-                setting.getWidthWasher(), setting.getHeightWasher()));
+        g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()-Setting.getWidthWasher()/2,
+                toSystem(washer.getCenterWasher()).getY()-Setting.getHeightWasher()/2,
+                Setting.getWidthWasher(), Setting.getHeightWasher()));
     }
 }

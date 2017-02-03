@@ -33,7 +33,7 @@ import java.util.Observable;
  * parameters[14] = nu<br>
  */
 
-class Rku extends Observable {
+public class Rku extends Observable {
     private double h, t = 0;
     private double[] parameters = new double[15];
     private double[][] k = new double[4][4];
