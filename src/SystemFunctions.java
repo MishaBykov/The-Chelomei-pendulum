@@ -1,5 +1,8 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class SystemFunctions implements Functions{
-    double[] parameters;
+    private Map<String, Double> parameters;
 
 
     /**
@@ -19,26 +22,29 @@ public class SystemFunctions implements Functions{
      * parameters[13] = theta <br>
      * parameters[14] = nu    <br>
      */
-    public SystemFunctions(double ... parameters) {
-        this.parameters = parameters;
+    public SystemFunctions(String[] parametersName, double[] parametersValue) {
+        this.parameters = new HashMap<String, Double>();
+        for (int i = 0; i < parametersName.length; i++) {
+            parameters.put(parametersName[i], parametersValue[i]);
+        }
     }
 
     public double suspensionX(double t) {
-        return parameters[12] * Math.sin(parameters[13] * t) * Math.sin(parameters[14]);
+        return parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.sin(parameters.get("nu"));
     }
 
     public double suspensionY(double t){
-        return parameters[12] * Math.sin(parameters[13] * t) * Math.cos(parameters[14]);
+        return  parameters.get("alpha") * Math.sin( parameters.get("theta") * t) * Math.cos( parameters.get("nu"));
     }
 
     private double f(int id, double t) {
         switch (id) {
             case 1:
-                return -Math.pow(parameters[14], 2) * parameters[12] * Math.sin(parameters[13])
-                        * Math.sin(parameters[14] * t);
+                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
+                        * Math.sin( parameters.get("nu") * t);
             case 2:
-                return -Math.pow(parameters[14], 2) * parameters[12] * Math.sin(parameters[13])
-                        * Math.cos(parameters[14] * t);
+                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
+                        * Math.cos( parameters.get("nu") * t);
             default:
                 return -1;
         }
@@ -59,18 +65,18 @@ public class SystemFunctions implements Functions{
                 return args[3];
             case 2:
                 return args[0] * Math.pow(args[3], 2)
-                        - parameters[9] * args[2]
-                        - (parameters[11] + f(1, t)) * Math.cos(args[1])
+                        - parameters.get("k2") * args[2]
+                        - (parameters.get("g") + f(1, t)) * Math.cos(args[1])
                         - f(2, t) * Math.sin(args[1]);
             case 3:
-                return (-2 * parameters[6] * args[0] * args[2] * args[3]
-                        - parameters[8] * args[3]
-                        + (parameters[10] * parameters[7] + parameters[6] * args[0]) * (parameters[11] + f(1, t)) * Math.sin(args[1])
-                        - (parameters[10] * parameters[7] + parameters[6] * args[0]) * f(2, t) * Math.cos(args[1])
+                return (-2 * parameters.get("m") * args[0] * args[2] * args[3]
+                        - parameters.get("k1") * args[3]
+                        + (parameters.get("M") * parameters.get("L") + parameters.get("m") * args[0]) * (parameters.get("g") + f(1, t)) * Math.sin(args[1])
+                        - (parameters.get("M") * parameters.get("L") + parameters.get("m") * args[0]) * f(2, t) * Math.cos(args[1])
                 )
-                        / (parameters[4]
-                        + parameters[5]
-                        + parameters[6] * Math.pow(args[0], 2)
+                        / (parameters.get("I0")
+                        + parameters.get("I1")
+                        + parameters.get("m") * Math.pow(args[0], 2)
                 );
             default:
                 return -1;
@@ -84,16 +90,16 @@ public class SystemFunctions implements Functions{
 
     @Override
     public int getCountParameter() {
-        return parameters.length;
+        return parameters.size();
     }
 
     @Override
-    public double getParameter(int index) {
-        return parameters[index];
+    public double getParameter(String nameParameter) {
+        return parameters.get(nameParameter);
     }
 
     @Override
-    public void setParameter(int index, double parameter) {
-        parameters[index] = parameter;
+    public void setParameter(String nameParameter, double newParameter) {
+        parameters.put(nameParameter, newParameter);
     }
 }
