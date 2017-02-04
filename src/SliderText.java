@@ -9,16 +9,16 @@ public class SliderText extends JFrame {
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
     private int idParameter;
-    private Rku rku;
+    private Functions functions;
     private double scale;
 
-    SliderText(Rku rku, int idParameter, String str, double scale) {
+    SliderText(Functions functions, int idParameter, String str, double scale) {
         this.scale = scale;
-        this.rku = rku;
+        this.functions = functions;
         this.idParameter = idParameter;
         panel.add(new JLabel(str));
 
-        textField.setText("" + rku.getParameters(idParameter));
+        textField.setText("" + functions.getParameter(idParameter));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
         panel.add(textField);
@@ -83,39 +83,43 @@ public class SliderText extends JFrame {
 
     void resetParameter(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
-            rku.setParameters(Double.parseDouble(textField.getText()), idParameter);
+            functions.setParameter(idParameter, Double.parseDouble(textField.getText()));
         }
     }
 
-//  x, phi, Estimation, b, I1,
+//  x, phi, a, b, I1,
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static SliderText[] initMSliderText(Rku rku) {
-        SliderText[] mSL = new SliderText[rku.getCountParameters()];
-        mSL[0] = new SliderText(rku, 0, "x", 1);
-        mSL[1] = new SliderText(rku, 1, "phi", 1);
-        mSL[2] = new SliderText(rku, 2, "a", 1);
-        mSL[3] = new SliderText(rku, 3, "b", 1);
-        mSL[4] = new SliderText(rku, 4, "I1", 1);
-        mSL[5] = new SliderText(rku, 5, "I2", 1);
-        mSL[6] = new SliderText(rku, 6, "m", 1);
-        mSL[7] = new SliderText(rku, 7, "L", 1);
-        mSL[8] = new SliderText(rku, 8, "k1", 1);
-        mSL[9] = new SliderText(rku, 9, "k2", 1);
-        mSL[10] = new SliderText(rku, 10, "M", 1);
-        mSL[11] = new SliderText(rku, 11, "g", 1);
-        mSL[12] = new SliderText(rku, 12, "alpha", 1);
-        mSL[14] = new SliderText(rku, 13, "nu", 1);
-        mSL[13] = new SliderText(rku, 14, "theta", 1);
+    public static SliderText[] initMSliderText(Functions functions, String[] nameParameters, double[] scale) {
+        SliderText[] mSL = new SliderText[functions.getCountParameter()];
+        for (int i = 0; i < functions.getCountParameter(); i++) {
+            mSL[i] = new SliderText(functions, i, nameParameters[i], scale[i]);
+        }
         /*
+        mSL[0] = new SliderText(functions, 0, "x", 1);
+        mSL[1] = new SliderText(functions, 1, "phi", 1);
+        mSL[2] = new SliderText(functions, 2, "a", 1);
+        mSL[3] = new SliderText(functions, 3, "b", 1);
+        mSL[4] = new SliderText(functions, 4, "I1", 1);
+        mSL[5] = new SliderText(functions, 5, "I2", 1);
+        mSL[6] = new SliderText(functions, 6, "m", 1);
+        mSL[7] = new SliderText(functions, 7, "L", 1);
+        mSL[8] = new SliderText(functions, 8, "k1", 1);
+        mSL[9] = new SliderText(functions, 9, "k2", 1);
+        mSL[10] = new SliderText(functions, 10, "M", 1);
+        mSL[11] = new SliderText(functions, 11, "g", 1);
+        mSL[12] = new SliderText(functions, 12, "alpha", 1);
+        mSL[14] = new SliderText(functions, 13, "nu", 1);
+        mSL[13] = new SliderText(functions, 14, "theta", 1);
+
         mSL[0].slider.setVisible(false);
         mSL[1].slider.setVisible(false);
         mSL[2].slider.setVisible(false);
         mSL[4].slider.setMaximum(500);
         mSL[8].slider.setMaximum(314);
-        mSL[4].textField.setText("" + rku.getParameters(7));
-        mSL[8].textField.setText("" + rku.getParameters(8));
+        mSL[4].textField.setText("" + functions.getParameters(7));
+        mSL[8].textField.setText("" + functions.getParameters(8));
         */
         return mSL;
     }

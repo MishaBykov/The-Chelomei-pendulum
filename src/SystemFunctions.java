@@ -78,6 +78,16 @@ public class SystemFunctions implements Functions{
     }
 
     @Override
+    public int getCountFunctions() {
+        return 4;
+    }
+
+    @Override
+    public int getCountParameter() {
+        return parameters.length;
+    }
+
+    @Override
     public double getParameter(int index) {
         return parameters[index];
     }
@@ -85,10 +95,5 @@ public class SystemFunctions implements Functions{
     @Override
     public void setParameter(int index, double parameter) {
         parameters[index] = parameter;
-    }
-
-    @Override
-    public int getCountFunctions() {
-        return parameters.length;
     }
 }
