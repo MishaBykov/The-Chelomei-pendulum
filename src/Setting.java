@@ -6,7 +6,7 @@ public class Setting {
     private static double scale = 100;
     private static int speedDown = 10;
 
-    Setting(){}
+    private Setting(){}
 
     public static double getScale() {
         return scale;

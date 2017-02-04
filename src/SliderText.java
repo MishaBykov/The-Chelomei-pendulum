@@ -97,6 +97,7 @@ public class SliderText extends JFrame {
         for (String key:
                 functions.getKeyParameters()) {
             mSL[i] = new SliderText(functions, key, scale[i]);
+            i++;
         }
         /*
         for (int i = 0; i < functions.getCountParameters(); i++) {

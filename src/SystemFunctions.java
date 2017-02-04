@@ -25,14 +25,17 @@ public class SystemFunctions implements Functions{
     private Map<String, Double> parameters;
     private String[] variables;
 
-    public SystemFunctions(String[] variables,
-            String[] parametersName, double[] parametersValue) {
+    public SystemFunctions() {
+// default:
+        variables = new String[]{"x", "phi", "a", "b"};
+        String[] parametersName = new String[]{"x", "phi", "a", "b", "I0", "I1", "m", "L",
+                "k1", "k2", "M", "g", "alpha", "nu", "theta"};
+        double[] parametersValue = new double[]{0, 0, 0, 4, 1, 1, 1, 1, 1, 1, 1, 9.8, 0, 0, 0};
+// --------
         parameters = new HashMap<String, Double>();
         for (int i = 0; i < parametersName.length; i++) {
             parameters.put(parametersName[i], parametersValue[i]);
         }
-
-        this.variables = variables;
     }
 
     public double suspensionX(double t) {

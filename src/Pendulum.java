@@ -8,12 +8,17 @@ public class Pendulum {
     private double angle;
     private Point2D.Double onePoint;
     private Point2D.Double twoPoint;
+    private Functions functions;
     private Rku rku;
 
-    public Pendulum(Rku rku, Color color) {
+    public Pendulum(Functions functions, Rku rku, Color color) {
+        this.functions = functions;
         this.rku = rku;
         onePoint = new Point2D.Double();
+
         this.color = color;
+
+        update();
     }
 
     public Color getColor() {
@@ -56,12 +61,10 @@ public class Pendulum {
         this.length = length;
     }
 
-    /*
-    public void update(Observable o, Object arg) {
-        double angle = rku.getParameters(1);
-        double len = rku.getParameters(7)*2;
-        setOnePoint(rku.suspensionX(), rku.suspensionY());
+    public void update() {
+        double angle = functions.getParameter("phi");
+        double len = functions.getParameter("L")*2;
+        setOnePoint(functions.suspensionX(rku.getT()), functions.suspensionY(rku.getT()));
         twoPoint = Setting.findTwoPoint(onePoint, len, angle);
     }
-    */
 }

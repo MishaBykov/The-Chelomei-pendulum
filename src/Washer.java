@@ -16,6 +16,8 @@ public class Washer {
         this.rku = rku;
         this.color = color;
         center = new Point2D.Double();
+
+        update();
     }
 
     public Point2D.Double getCenterWasher() {
