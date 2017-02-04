@@ -8,17 +8,17 @@ public class SliderText extends JFrame {
 
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
-    private int idParameter;
+    private String nameParameter;
     private Functions functions;
     private double scale;
 
-    SliderText(Functions functions, int idParameter, String str, double scale) {
+    SliderText(Functions functions, String nameParameter, double scale) {
         this.scale = scale;
         this.functions = functions;
-        this.idParameter = idParameter;
-        panel.add(new JLabel(str));
+        this.nameParameter = nameParameter;
+        panel.add(new JLabel(nameParameter));
 
-        textField.setText("" + functions.getParameter(idParameter));
+        textField.setText(Double.toString(functions.getParameter(nameParameter)));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
         panel.add(textField);
@@ -35,7 +35,7 @@ public class SliderText extends JFrame {
         public void stateChanged(ChangeEvent event) {
             JSlider source = (JSlider) event.getSource();
             textField.getDocument().removeDocumentListener(dl);
-            textField.setText("" + source.getValue()/scale);
+            textField.setText(Double.toString(source.getValue()/scale));
             textField.getDocument().addDocumentListener(dl);
         }
     };
@@ -83,7 +83,7 @@ public class SliderText extends JFrame {
 
     void resetParameter(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
-            functions.setParameter(idParameter, Double.parseDouble(textField.getText()));
+            functions.setParameter(nameParameter, Double.parseDouble(textField.getText()));
         }
     }
 
@@ -91,12 +91,18 @@ public class SliderText extends JFrame {
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static SliderText[] initMSliderText(Functions functions, String[] nameParameters, double[] scale) {
-        SliderText[] mSL = new SliderText[functions.getCountParameter()];
-        for (int i = 0; i < functions.getCountParameter(); i++) {
-            mSL[i] = new SliderText(functions, i, nameParameters[i], scale[i]);
+    public static SliderText[] initMSliderText(Functions functions, double[] scale) {
+        SliderText[] mSL = new SliderText[functions.getCountParameters()];
+        int i = 0;
+        for (String key:
+                functions.getKeyParameters()) {
+            mSL[i] = new SliderText(functions, key, scale[i]);
         }
         /*
+        for (int i = 0; i < functions.getCountParameters(); i++) {
+            mSL[i] = new SliderText(functions, nameParameters[i], scale[i]);
+        }
+
         mSL[0] = new SliderText(functions, 0, "x", 1);
         mSL[1] = new SliderText(functions, 1, "phi", 1);
         mSL[2] = new SliderText(functions, 2, "a", 1);
