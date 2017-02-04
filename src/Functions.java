@@ -18,4 +18,7 @@ public interface Functions {
 
     double getResultFunction(double t, int id, double ... args);
     int getCountFunctions();
+
+    double suspensionX(double t);
+    double suspensionY(double t);
 }

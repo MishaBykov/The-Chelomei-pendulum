@@ -2,28 +2,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
+/**
+ * parameters[0]  = x     <br>
+ * parameters[1]  = phi   <br>
+ * parameters[2]  = a     <br>
+ * parameters[3]  = b     <br>
+ * parameters[4]  = I0    <br>
+ * parameters[5]  = I1    <br>
+ * parameters[6]  = m     <br>
+ * parameters[7]  = L     <br>
+ * parameters[8]  = k1    <br>
+ * parameters[9]  = k2    <br>
+ * parameters[10] = M     <br>
+ * parameters[11] = g     <br>
+ * parameters[12] = alpha <br>
+ * parameters[13] = theta <br>
+ * parameters[14] = nu    <br>
+ */
+
 public class SystemFunctions implements Functions{
     private Map<String, Double> parameters;
     private String[] variables;
 
-
-    /**
-     * parameters[0] = x      <br>
-     * parameters[1] = phi    <br>
-     * parameters[2] = a      <br>
-     * parameters[3] = b      <br>
-     * parameters[4] = I0     <br>
-     * parameters[5] = I1     <br>
-     * parameters[6] = m      <br>
-     * parameters[7] = L      <br>
-     * parameters[8] = k1     <br>
-     * parameters[9] = k2     <br>
-     * parameters[10] = M     <br>
-     * parameters[11] = g     <br>
-     * parameters[12] = alpha <br>
-     * parameters[13] = theta <br>
-     * parameters[14] = nu    <br>
-     */
     public SystemFunctions(String[] variables,
             String[] parametersName, double[] parametersValue) {
         parameters = new HashMap<String, Double>();

@@ -4,14 +4,15 @@ import java.awt.geom.*;
 public class Washer {
     private Color color;
 
+    private Functions functions;
     private Rku rku;
     private double angle;
     private double x;
-    private double len;
     private Point2D.Double center;
     private Point2D.Double centerWasher;
 
-    public Washer(Rku rku, Color color) {
+    public Washer(Functions functions, Rku rku,Color color) {
+        this.functions = functions;
         this.rku = rku;
         this.color = color;
         center = new Point2D.Double();
@@ -29,24 +30,16 @@ public class Washer {
         this.x = x;
     }
 
-    public void setLen(double len) {
-        this.len = len*2;
-    }
-
     public void setAngle(double angle) {
         this.angle = angle;
     }
 
-    /*
-    @Override
-    public void update(Observable o, Object arg) {
-        setLen(rku.getParameters(7));
-        setX(rku.getParameters(0));
-        center.setLocation(rku.suspensionX(), rku.suspensionY());
+    public void update() {
+        setX(functions.getParameter("x"));
+        center.setLocation(functions.suspensionX(rku.getT()), functions.suspensionY(rku.getT()));
 
-        setAngle(rku.getParameters(1));
+        setAngle(functions.getParameter("phi"));
 
         centerWasher = Setting.findTwoPoint(center, x, angle);
     }
-    */
 }
