@@ -31,7 +31,7 @@ public class PanelButton {
             for (SliderText aMasSliderText : masSliderText) {
                 aMasSliderText.resetParameter();
             }
-            imagePanel.repaint();
+            imagePanel.update();
         }
     };
 

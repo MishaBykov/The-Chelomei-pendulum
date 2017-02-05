@@ -4,7 +4,7 @@ public class Setting {
     private static double widthWasher = 10;
     private static double heightWasher = 10;
     private static double scale = 100;
-    private static int speedDown = 10;
+    private static int speedDown = 40;
 
     private Setting(){}
 
