@@ -50,7 +50,6 @@ public class ImagePanel extends JComponent implements ActionListener {
     public void update(){
         washer.update();
         pendulum.update();
-
         repaint();
     }
 
@@ -77,8 +76,9 @@ public class ImagePanel extends JComponent implements ActionListener {
         g2d.draw(new Line2D.Double(toSystem(pendulum.getOnePoint()), toSystem(pendulum.getTwoPoint())));
 
         g2d.setColor(washer.getColor());
-        g2d.draw(new Ellipse2D.Double(toSystem(washer.getCenterWasher()).getX()- Setting.getWidthWasher()/2,
-                toSystem(washer.getCenterWasher()).getY()- Setting.getHeightWasher()/2,
-                Setting.getWidthWasher(), Setting.getHeightWasher()));
+        g2d.draw(new Ellipse2D.Double(
+                toSystem(washer.getCenterWasher()).getX()- Setting.getWidthWasher()/2 * Setting.getScale(),
+                toSystem(washer.getCenterWasher()).getY()- Setting.getHeightWasher()/2 * Setting.getScale(),
+                Setting.getWidthWasher()*Setting.getScale(), Setting.getHeightWasher()*Setting.getScale()));
     }
 }

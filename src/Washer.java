@@ -42,6 +42,6 @@ public class Washer {
 
         setAngle(functions.getParameter("phi"));
 
-        centerWasher = Setting.findTwoPoint(center, x, angle);
+        centerWasher = Setting.findTwoPoint(center, x + Setting.getHeightWasher()/2, angle);
     }
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.util.Set;
 
 public class SliderText extends JFrame {
 
@@ -94,8 +95,7 @@ public class SliderText extends JFrame {
     public static SliderText[] initMSliderText(Functions functions, double[] scale) {
         SliderText[] mSL = new SliderText[functions.getCountParameters()];
         int i = 0;
-        for (String key:
-                functions.getKeyParameters()) {
+        for (String key : functions.getKeyParameters()) {
             mSL[i] = new SliderText(functions, key, scale[i]);
             i++;
         }

@@ -30,7 +30,7 @@ public class SystemFunctions implements Functions{
         variables = new String[]{"x", "phi", "a", "b"};
         String[] parametersName = new String[]{"x", "phi", "a", "b", "I0", "I1", "m", "L",
                 "k1", "k2", "M", "g", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{0.05, 1.575, 0, 4, 1, 1, 1, 1,
+        double[] parametersValue = new double[]{0.05, 1.575, 0, 0, 1, 1, 1, 1,
                 1, 1, 1, 9.8, 0, 0, 0};
 // --------
         parameters = new HashMap<String, Double>();
