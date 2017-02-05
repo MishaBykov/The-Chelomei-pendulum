@@ -1,17 +1,18 @@
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
  *
  */
-public class WasherFunctions {
-    public SystemFunctions() {
+public class WasherFunctions implements Functions{
+    private Map<String, Double> parameters;
+    private String[] variables;
+    public WasherFunctions() {
 // default:
-        variables = new String[]{"x", "phi", "a", "b"};
-        String[] parametersName = new String[]{"x", "phi", "a", "b", "I0", "I1", "m", "L",
-                "k1", "k2", "M", "g", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{0.05, 1.575, 0, 0, 1, 1, 1, 1,
-                1, 1, 1, 9.8, 0, 0, 0};
+        variables = new String[]{};
+        String[] parametersName = new String[]{};
+        double[] parametersValue = new double[]{};
 // --------
         parameters = new HashMap<String, Double>();
         for (int i = 0; i < parametersName.length; i++) {
@@ -53,38 +54,11 @@ public class WasherFunctions {
     }
 
     /**
-     * x   = args[0]
-     * phi = args[1]
-     * a   = args[2]
-     * b   = args[3]
+     *
      */
     @Override
     public double getResultFunction(double t, int id, double ... args) {
-        switch (id) {
-            case 0:
-                return args[2];
-            case 1:
-                return args[3];
-            case 2:
-                return args[0] * Math.pow(args[3], 2)
-                        - parameters.get("k2") * args[2]
-                        - (parameters.get("g") + f(1, t)) * Math.cos(args[1])
-                        - f(2, t) * Math.sin(args[1]);
-            case 3:
-                return (-2 * parameters.get("m") * args[0] * args[2] * args[3]
-                        - parameters.get("k1") * args[3]
-                        + (parameters.get("M") * parameters.get("L") + parameters.get("m") * args[0])
-                        * (parameters.get("g") + f(1, t)) * Math.sin(args[1])
-                        - (parameters.get("M") * parameters.get("L") + parameters.get("m") * args[0])
-                        * f(2, t) * Math.cos(args[1])
-                )
-                        / (parameters.get("I0")
-                        + parameters.get("I1")
-                        + parameters.get("m") * Math.pow(args[0], 2)
-                );
-            default:
-                return -1;
-        }
+        return 0;
     }
     private double f(int id, double t) {
         switch (id) {
@@ -101,8 +75,7 @@ public class WasherFunctions {
 
     @Override
     public int getCountFunctions() {
-        return 4;
+        return 2;
     }
-}
 }
 
