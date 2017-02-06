@@ -63,7 +63,8 @@ public class Pendulum {
 
     public void update() {
         double angle = functions.getParameter("phi");
-        double len = functions.getParameter("L")*2;
+//        double len = functions.getParameter("L")*2;
+        double len = functions.getParameter("l");
         setOnePoint(functions.suspensionX(rku.getT()), functions.suspensionY(rku.getT()));
         twoPoint = Setting.findTwoPoint(onePoint, len, angle);
     }
