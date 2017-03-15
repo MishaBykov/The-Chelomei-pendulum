@@ -37,21 +37,14 @@ import java.util.Set;
  */
 
 public class SystemFunctions implements Functions{
-    private Map<String, Double> parameters;
+    private Parameters parameters;
     private String[] variables;
 
-    public SystemFunctions() {
+    public SystemFunctions(Parameters parameters) {
 // default:
         variables = new String[]{"x", "phi", "a", "b"};
-        String[] parametersName = new String[]{"x", "phi", "a", "b", "I0", "I1", "m", "L",
-                "k1", "k2", "M", "g", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{0.0, 0.0, 0, 0, 1, 1, 1, 1,
-                1, 1, 1, 9.8, 0, 0, 0};
 // --------
-        parameters = new HashMap<String, Double>();
-        for (int i = 0; i < parametersName.length; i++) {
-            parameters.put(parametersName[i], parametersValue[i]);
-        }
+        this.parameters = parameters;
     }
 
     public double suspensionX(double t) {
@@ -65,30 +58,6 @@ public class SystemFunctions implements Functions{
     @Override
     public String[] getNameVariables() {
         return variables;
-    }
-
-    @Override
-    public int getCountParameters() {
-        return parameters.size();
-    }
-
-    @Override
-    public Set<String> getKeyParameters() {
-        return parameters.keySet();
-    }
-
-    @Override
-    public double getParameter(String nameParameter) {
-        return parameters.get(nameParameter);
-    }
-
-    @Override
-    public void setParameter(String nameParameter, double newParameter) {
-        if (parameters.get("x")<0 && parameters.get("a")<0){
-            parameters.put("x", 0.0);
-            parameters.put("a", 0.0);
-        }
-        parameters.put(nameParameter, newParameter);
     }
 
     /**
