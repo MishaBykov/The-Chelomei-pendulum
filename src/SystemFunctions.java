@@ -79,11 +79,12 @@ public class SystemFunctions implements Functions{
                         - (parameters.get("g") + f(1, t)) * Math.cos(args[1])
                         - f(2, t) * Math.sin(args[1]);
             case 3:
+                double l = parameters.get("l")/2;
                 return (-2 * parameters.get("m") * args[0] * args[2] * args[3]
                         - parameters.get("k1") * args[3]
-                        + (parameters.get("M") * parameters.get("L") + parameters.get("m") * args[0])
+                        + (parameters.get("M") * l + parameters.get("m") * args[0])
                             * (parameters.get("g") + f(1, t)) * Math.sin(args[1])
-                        - (parameters.get("M") * parameters.get("L") + parameters.get("m") * args[0])
+                        - (parameters.get("M") * l + parameters.get("m") * args[0])
                             * f(2, t) * Math.cos(args[1])
                 )
                         / (parameters.get("I0")

@@ -60,7 +60,7 @@ public class Pendulum {
     }
 
     public void setLength(double length) {
-        this.length = length/2;
+        this.length = length;
     }
 
     public void update() {
