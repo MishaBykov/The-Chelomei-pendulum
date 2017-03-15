@@ -4,6 +4,7 @@ import java.awt.geom.*;
 public class Washer {
     private Color color;
 
+    private Parameters parameters;
     private Functions functions;
     private Rku rku;
     private double angle;
@@ -11,8 +12,9 @@ public class Washer {
     private Point2D.Double center;
     private Point2D.Double centerWasher;
 
-    public Washer(Functions functions, Rku rku,Color color) {
+    public Washer(Functions functions,Parameters parameters, Rku rku,Color color) {
         this.functions = functions;
+        this.parameters = parameters;
         this.rku = rku;
         this.color = color;
         center = new Point2D.Double();
@@ -37,10 +39,10 @@ public class Washer {
     }
 
     public void update() {
-        setX(functions.getParameter("x"));
+        setX(parameters.get("x"));
         center.setLocation(functions.suspensionX(rku.getT()), functions.suspensionY(rku.getT()));
 
-        setAngle(functions.getParameter("phi"));
+        setAngle(parameters.get("phi"));
 
         centerWasher = Setting.findTwoPoint(center, x + Setting.getHeightWasher()/2, angle);
     }

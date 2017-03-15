@@ -10,16 +10,16 @@ public class SliderText extends JFrame {
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
     private String nameParameter;
-    private Functions functions;
+    private Parameters parameters;
     private double scale;
 
-    SliderText(Functions functions, String nameParameter, double scale) {
+    private SliderText(Parameters parameters, String nameParameter, double scale) {
         this.scale = scale;
-        this.functions = functions;
+        this.parameters = parameters;
         this.nameParameter = nameParameter;
         panel.add(new JLabel(nameParameter));
 
-        textField.setText(Double.toString(functions.getParameter(nameParameter)));
+        textField.setText(Double.toString(parameters.get(nameParameter)));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
         panel.add(textField);
@@ -84,7 +84,7 @@ public class SliderText extends JFrame {
 
     void resetParameter(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
-            functions.setParameter(nameParameter, Double.parseDouble(textField.getText()));
+            parameters.set(nameParameter, Double.parseDouble(textField.getText()));
         }
     }
 
@@ -92,11 +92,11 @@ public class SliderText extends JFrame {
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static SliderText[] initMSliderText(Functions functions, double[] scale) {
-        SliderText[] mSL = new SliderText[functions.getCountParameters()];
+    public static SliderText[] initMSliderText(Parameters parameters, double[] scale) {
+        SliderText[] mSL = new SliderText[parameters.getCountParameters()];
         int i = 0;
-        for (String key : functions.getKeyParameters()) {
-            mSL[i] = new SliderText(functions, key, scale[i]);
+        for (String key : parameters.getKeyParameters()) {
+            mSL[i] = new SliderText(parameters, key, scale[i]);
             i++;
         }
         /*

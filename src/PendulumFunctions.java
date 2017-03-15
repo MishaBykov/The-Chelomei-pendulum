@@ -31,19 +31,14 @@ import java.util.Set;
  * }<br>
  */
 public class PendulumFunctions implements Functions {
-    private Map<String, Double> parameters;
+    private Parameters parameters;
     private String[] variables;
 
-    public PendulumFunctions() {
+    public PendulumFunctions(Parameters parameters) {
 // default:
         variables = new String[]{"x", "phi"};
-        String[] parametersName = new String[]{"x", "phi", "g", "m", "l", "c", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{ 0,     0, 9.8,   0,   0,   0,       0,    0,       0};
 // --------
-        parameters = new HashMap<String, Double>();
-        for (int i = 0; i < parametersName.length; i++) {
-            parameters.put(parametersName[i], parametersValue[i]);
-        }
+        this.parameters = parameters;
     }
 
     public double suspensionX(double t) {
@@ -57,26 +52,6 @@ public class PendulumFunctions implements Functions {
     @Override
     public String[] getNameVariables() {
         return variables;
-    }
-
-    @Override
-    public int getCountParameters() {
-        return parameters.size();
-    }
-
-    @Override
-    public Set<String> getKeyParameters() {
-        return parameters.keySet();
-    }
-
-    @Override
-    public double getParameter(String nameParameter) {
-        return parameters.get(nameParameter);
-    }
-
-    @Override
-    public void setParameter(String nameParameter, double newParameter) {
-        parameters.put(nameParameter, newParameter);
     }
 
     /**

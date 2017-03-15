@@ -33,26 +33,6 @@ public class WasherFunctions implements Functions{
         return variables;
     }
 
-    @Override
-    public int getCountParameters() {
-        return parameters.size();
-    }
-
-    @Override
-    public Set<String> getKeyParameters() {
-        return parameters.keySet();
-    }
-
-    @Override
-    public double getParameter(String nameParameter) {
-        return parameters.get(nameParameter);
-    }
-
-    @Override
-    public void setParameter(String nameParameter, double newParameter) {
-        parameters.put(nameParameter, newParameter);
-    }
-
     /**
      *
      */
