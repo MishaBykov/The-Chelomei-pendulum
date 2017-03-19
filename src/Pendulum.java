@@ -6,33 +6,26 @@ public class Pendulum {
 
     private double length;
     private double angle;
-    private Point2D.Double onePoint;
-    private Point2D.Double twoPoint;
+    private Point2D.Double suspensionPoint;
     private Functions functions;
     private Parameters parameters;
-    private Rku rku;
 
-    public Pendulum(Functions functions, Parameters parameters, Rku rku, Color color) {
+    public Pendulum(Functions functions, Parameters parameters, double t, Color color) {
         this.functions = functions;
         this.parameters = parameters;
-        this.rku = rku;
-        onePoint = new Point2D.Double();
+        suspensionPoint = new Point2D.Double();
 
         this.color = color;
 
-        update();
+        update(t);
     }
 
     public Color getColor() {
         return color;
     }
 
-    public Point2D.Double getOnePoint() {
-        return onePoint;
-    }
-
-    public Point2D.Double getTwoPoint() {
-        return twoPoint;
+    public Point2D.Double getSuspensionPoint() {
+        return suspensionPoint;
     }
 
     public double getAngle() {
@@ -43,16 +36,18 @@ public class Pendulum {
         return length;
     }
 
+
+
     public void setColor(Color color) {
         this.color = color;
     }
 
-    public void setOnePoint(double x, double y) {
-        onePoint.setLocation(x ,y);
+    public void setSuspensionPoint(double x, double y) {
+        suspensionPoint.setLocation(x ,y);
     }
 
-    public void setTwoPoint(double x, double y) {
-        twoPoint.setLocation(x, y);
+    public void setSuspensionPoint(Point2D.Double point) {
+        suspensionPoint.setLocation(point);
     }
 
     public void setAngle(double angle) {
@@ -63,10 +58,9 @@ public class Pendulum {
         this.length = length;
     }
 
-    public void update() {
+    public void update(double t) {
         setAngle(parameters.get("phi"));
         setLength(parameters.get("l"));
-        setOnePoint(functions.suspensionX(rku.getT()), functions.suspensionY(rku.getT()));
-        twoPoint = Setting.findTwoPoint(onePoint, getLength(), getAngle());
+        setSuspensionPoint(functions.suspensionPoint(t));
     }
 }

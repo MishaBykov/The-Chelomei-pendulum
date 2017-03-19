@@ -2,24 +2,19 @@ import java.awt.*;
 import java.awt.geom.*;
 
 public class Washer {
+    private Point2D.Double centerWasher;
+
     private Color color;
 
     private Parameters parameters;
     private Functions functions;
-    private Rku rku;
-    private double angle;
-    private double x;
-    private Point2D.Double center;
-    private Point2D.Double centerWasher;
 
-    public Washer(Functions functions,Parameters parameters, Rku rku,Color color) {
+    public Washer(Functions functions, Parameters parameters, double t, Color color) {
         this.functions = functions;
         this.parameters = parameters;
-        this.rku = rku;
         this.color = color;
-        center = new Point2D.Double();
 
-        update();
+        update(t);
     }
 
     public Point2D.Double getCenterWasher() {
@@ -30,20 +25,19 @@ public class Washer {
         return color;
     }
 
-    public void setX(double x) {
-        this.x = x;
+    public void setCenterWasher(Point2D.Double centerWasher) {
+        this.centerWasher = centerWasher;
     }
 
-    public void setAngle(double angle) {
-        this.angle = angle;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
-    public void update() {
-        setX(parameters.get("x"));
-        center.setLocation(functions.suspensionX(rku.getT()), functions.suspensionY(rku.getT()));
-
-        setAngle(parameters.get("phi"));
-
-        centerWasher = Setting.findTwoPoint(center, x + Setting.getHeightWasher()/2, angle);
+    public void update(double t) {
+        centerWasher = Setting.findTwoPoint(
+                functions.suspensionPoint(t),
+                parameters.get("x") + Setting.getHeightWasher()/2,
+                parameters.get("phi")
+        );
     }
 }

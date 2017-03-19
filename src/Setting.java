@@ -24,8 +24,8 @@ public class Setting {
         return widthWasher;
     }
 
-    public static Point2D.Double findTwoPoint(Point2D.Double one, double len, double angle) {
-        return new Point2D.Double(-Math.sin(angle) * len + one.getX(),
-                Math.cos(angle) * len + one.getY());
+    public static Point2D.Double findTwoPoint(Point2D.Double onePoin, double len, double angle) {
+        return new Point2D.Double(-Math.sin(angle) * len + onePoin.getX(),
+                Math.cos(angle) * len + onePoin.getY());
     }
 }

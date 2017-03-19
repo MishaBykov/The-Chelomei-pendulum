@@ -2,7 +2,7 @@ import java.util.Observable;
 
 
 public class Rku {
-    private double h, t = 0;
+    private double h, t;
     private double[][] k = new double[4][4];
     private Functions functions;
     private Parameters parameters;
@@ -11,12 +11,13 @@ public class Rku {
 
     private int countExample;
 
-    Rku(Functions functions,Parameters parameters , double step) {
+    Rku(Functions functions,Parameters parameters, double t, double step) {
         this.parameters = parameters;
         countExample = functions.getCountFunctions();
         variables = functions.getNameVariables();
         variablesValue = new double[variables.length];
         this.functions = functions;
+        this.t = t;
         h = step;
     }
 

@@ -1,3 +1,4 @@
+import java.awt.geom.Point2D;
 import java.util.Set;
 
 /**
@@ -14,6 +15,5 @@ public interface Functions {
     double getResultFunction(double t, int id, double ... args);
     int getCountFunctions();
 
-    double suspensionX(double t);
-    double suspensionY(double t);
+    Point2D.Double suspensionPoint(double t);
 }
