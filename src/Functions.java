@@ -10,7 +10,7 @@ import java.util.Set;
  * getCountFunctions  <br>
  */
 public interface Functions {
-    String[] getNameVariables();
+    String getNameVariables();
 
     double getResultFunction(double t, int id, double ... args);
     int getCountFunctions();

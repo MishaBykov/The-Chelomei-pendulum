@@ -1,7 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * M — Масса стержня,<br>
  * m — масса шайбы,<br>
@@ -19,40 +15,40 @@ import java.util.Set;
  * f1(t) — вертикальная составляющая колебаний точки подвеса,<br>
  * f2(t) — горизонтальная составляющая колебаний точки подвеса.<br>
 
- * parameters[0]  = x     <br>
- * parameters[1]  = phi   <br>
- * parameters[2]  = a     <br>
- * parameters[3]  = b     <br>
- * parameters[4]  = I0    <br>
- * parameters[5]  = I1    <br>
- * parameters[6]  = m     <br>
- * parameters[7]  = L     <br>
- * parameters[8]  = k1    <br>
- * parameters[9]  = k2    <br>
- * parameters[10] = M     <br>
- * parameters[11] = g     <br>
- * parameters[12] = alpha <br>
- * parameters[13] = theta <br>
- * parameters[14] = nu    <br>
+ * values[0]  = x     <br>
+ * values[1]  = phi   <br>
+ * values[2]  = dotX     <br>
+ * values[3]  = dotPhi     <br>
+ * values[4]  = I0    <br>
+ * values[5]  = I1    <br>
+ * values[6]  = m     <br>
+ * values[7]  = L     <br>
+ * values[8]  = k1    <br>
+ * values[9]  = k2    <br>
+ * values[10] = M     <br>
+ * values[11] = g     <br>
+ * values[12] = alpha <br>
+ * values[13] = theta <br>
+ * values[14] = nu    <br>
  */
 
 public class SystemFunctions implements Functions{
-    private Parameters parameters;
+    private Values values;
     private String[] variables;
 
-    public SystemFunctions(Parameters parameters) {
+    public SystemFunctions(Values values) {
 // default:
-        variables = new String[]{"x", "phi", "a", "b"};
+        variables = new String[]{"x", "phi", "dotX", "dotPhi"};
 // --------
-        this.parameters = parameters;
+        this.values = values;
     }
 
     public double suspensionX(double t) {
-        return parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.sin(parameters.get("nu"));
+        return values.getParameter("alpha") * Math.sin(values.getParameter("theta") * t) * Math.sin(values.getParameter("nu"));
     }
 
     public double suspensionY(double t){
-        return  parameters.get("alpha") * Math.sin( parameters.get("theta") * t) * Math.cos( parameters.get("nu"));
+        return  values.getParameter("alpha") * Math.sin( values.getParameter("theta") * t) * Math.cos( values.getParameter("nu"));
     }
 
     @Override
@@ -63,8 +59,8 @@ public class SystemFunctions implements Functions{
     /**
      * x   = args[0]
      * phi = args[1]
-     * a   = args[2]
-     * b   = args[3]
+     * dotX   = args[2]
+     * dotPhi   = args[3]
      */
     @Override
     public double getResultFunction(double t, int id, double ... args) {
@@ -75,21 +71,21 @@ public class SystemFunctions implements Functions{
                 return args[3];
             case 2:
                 return args[0] * Math.pow(args[3], 2)
-                        - parameters.get("k2") * args[2]
-                        - (parameters.get("g") + f(1, t)) * Math.cos(args[1])
+                        - values.getParameter("k2") * args[2]
+                        - (values.getParameter("g") + f(1, t)) * Math.cos(args[1])
                         - f(2, t) * Math.sin(args[1]);
             case 3:
-                double l = parameters.get("l")/2;
-                return (-2 * parameters.get("m") * args[0] * args[2] * args[3]
-                        - parameters.get("k1") * args[3]
-                        + (parameters.get("M") * l + parameters.get("m") * args[0])
-                            * (parameters.get("g") + f(1, t)) * Math.sin(args[1])
-                        - (parameters.get("M") * l + parameters.get("m") * args[0])
+                double l = values.getParameter("l")/2;
+                return (-2 * values.getParameter("m") * args[0] * args[2] * args[3]
+                        - values.getParameter("k1") * args[3]
+                        + (values.getParameter("M") * l + values.getParameter("m") * args[0])
+                            * (values.getParameter("g") + f(1, t)) * Math.sin(args[1])
+                        - (values.getParameter("M") * l + values.getParameter("m") * args[0])
                             * f(2, t) * Math.cos(args[1])
                 )
-                        / (parameters.get("I0")
-                        + parameters.get("I1")
-                        + parameters.get("m") * Math.pow(args[0], 2)
+                        / (values.getParameter("I0")
+                        + values.getParameter("I1")
+                        + values.getParameter("m") * Math.pow(args[0], 2)
                 );
             default:
                 return -1;
@@ -98,11 +94,11 @@ public class SystemFunctions implements Functions{
     private double f(int id, double t) {
         switch (id) {
             case 1:
-                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
-                        * Math.sin( parameters.get("nu") * t);
+                return -Math.pow( values.getParameter("nu"), 2) *  values.getParameter("alpha") * Math.sin( values.getParameter("theta"))
+                        * Math.sin( values.getParameter("nu") * t);
             case 2:
-                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
-                        * Math.cos( parameters.get("nu") * t);
+                return -Math.pow( values.getParameter("nu"), 2) *  values.getParameter("alpha") * Math.sin( values.getParameter("theta"))
+                        * Math.cos( values.getParameter("nu") * t);
             default:
                 return -1;
         }

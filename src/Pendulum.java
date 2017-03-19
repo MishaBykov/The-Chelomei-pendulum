@@ -8,11 +8,11 @@ public class Pendulum {
     private double angle;
     private Point2D.Double suspensionPoint;
     private Functions functions;
-    private Parameters parameters;
+    private Values values;
 
-    public Pendulum(Functions functions, Parameters parameters, double t, Color color) {
+    public Pendulum(Functions functions, Values values, double t, Color color) {
         this.functions = functions;
-        this.parameters = parameters;
+        this.values = values;
         suspensionPoint = new Point2D.Double();
 
         this.color = color;
@@ -59,8 +59,8 @@ public class Pendulum {
     }
 
     public void update(double t) {
-        setAngle(parameters.get("phi"));
-        setLength(parameters.get("l"));
+        setAngle(values.getParameter("phi"));
+        setLength(values.getParameter("l"));
         setSuspensionPoint(functions.suspensionPoint(t));
     }
 }

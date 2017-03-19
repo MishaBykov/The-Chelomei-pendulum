@@ -1,21 +1,31 @@
-import java.util.Observable;
-
+import java.util.HashMap;
+import java.util.Set;
 
 public class Rku {
     private double h, t;
-    private double[][] k = new double[4][4];
+    private double[][] k;
     private Functions functions;
-    private Parameters parameters;
-    private String[] variables;
-    private double[] variablesValue;
+    private Values values;
+    HashMap<String, Double> variables;
+    private String[] namesVariables;
+    private double[] valueVariables;
 
     private int countExample;
 
-    Rku(Functions functions,Parameters parameters, double t, double step) {
-        this.parameters = parameters;
+    Rku(Functions functions, Values values, String nameVariables, double t, double step) {
+        this.values = values;
+        variables = values.getVariables(nameVariables);
         countExample = functions.getCountFunctions();
-        variables = functions.getNameVariables();
-        variablesValue = new double[variables.length];
+        k = new double[4][countExample];
+
+        HashMap<String, Double> ov = values.getVariables(nameVariables+"Order");
+        Set<String> keys = ov.keySet();
+        namesVariables = new String[ov.size()];
+        for(String key : keys) {
+            namesVariables[(int) (double) ov.get(key)] = key;
+        }
+
+        valueVariables = new double[namesVariables.length];
         this.functions = functions;
         this.t = t;
         h = step;
@@ -23,30 +33,30 @@ public class Rku {
 
     public void toStep() {
         for (int i = 0; i < countExample; i++) {
-            for (int j = 0; j < variables.length; j++) {
-                variablesValue[j] = parameters.get(variables[j]);
+            for (int j = 0; j < namesVariables.length; j++) {
+                valueVariables[j] = variables.get(namesVariables[j]);
             }
-            k[0][i] = h * functions.getResultFunction(t, i, variablesValue);
+            k[0][i] = h * functions.getResultFunction(t, i, valueVariables);
         }
 
         for (int i = 1; i < 3; i++) {
             for (int j = 0; j < countExample; j++) {
-                for (int i1 = 0; i1 < variables.length; i1++) {
-                    variablesValue[i1] = parameters.get(variables[i1]) + k[i - 1][i1] / 2;
+                for (int i1 = 0; i1 < namesVariables.length; i1++) {
+                    valueVariables[i1] = variables.get(namesVariables[i1]) + k[i - 1][i1] / 2;
                 }
-                k[i][j] = h * functions.getResultFunction(t + h / 2, j, variablesValue);
+                k[i][j] = h * functions.getResultFunction(t + h / 2, j, valueVariables);
             }
         }
 
         for (int i = 0; i < countExample; i++) {
-            for (int i1 = 0; i1 < variables.length; i1++) {
-                variablesValue[i1] = parameters.get(variables[i1]) + k[2][i1];
+            for (int i1 = 0; i1 < namesVariables.length; i1++) {
+                valueVariables[i1] = variables.get(namesVariables[i1]) + k[2][i1];
             }
-            k[3][i] = h * functions.getResultFunction(t + h, i, variablesValue);
+            k[3][i] = h * functions.getResultFunction(t + h, i, valueVariables);
         }
 
-        for (int i = 0; i < variables.length; i++) {
-            parameters.set(variables[i], parameters.get(variables[i])
+        for (int i = 0; i < namesVariables.length; i++) {
+            variables.put(namesVariables[i], variables.get(namesVariables[i])
                     + 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]));
         }
 
@@ -56,39 +66,7 @@ public class Rku {
 
     public void toStep(long time) {
         while (time > 0) {
-            for (int i = 0; i < countExample; i++) {
-                k[0][i] = h * functions.getResultFunction(t, i, 
-                        parameters.get(variables[0]), 
-                        parameters.get(variables[1]),
-                        parameters.get(variables[2]),
-                        parameters.get(variables[3]));
-            }
-
-            for (int i = 1; i < 3; i++) {
-                for (int j = 0; j < countExample; j++) {
-                    k[i][j] = h * functions.getResultFunction(t + h / 2, j,
-                            parameters.get(variables[0]) + k[i - 1][0] / 2,
-                            parameters.get(variables[1]) + k[i - 1][1] / 2,
-                            parameters.get(variables[2]) + k[i - 1][2] / 2,
-                            parameters.get(variables[3]) + k[i - 1][3] / 2);
-                }
-            }
-
-            for (int i = 0; i < countExample; i++) {
-                k[3][i] = h * functions.getResultFunction(t + h, i,
-                        parameters.get(variables[0]) + k[2][0],
-                        parameters.get(variables[1]) + k[2][1],
-                        parameters.get(variables[2]) + k[2][0],
-                        parameters.get(variables[3]) + k[2][1]);
-            }
-
-            for (int i = 0; i < countExample; i++) {
-                parameters.set(variables[i], parameters.get(variables[i])
-                + 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]));
-            }
-
-            t += h;
-
+            toStep();
             time--;
         }
     }

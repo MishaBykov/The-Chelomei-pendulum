@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
-import java.util.Set;
 
 public class SliderText extends JFrame {
 
@@ -10,16 +9,16 @@ public class SliderText extends JFrame {
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
     private String nameParameter;
-    private Parameters parameters;
+    private Values values;
     private double scale;
 
-    private SliderText(Parameters parameters, String nameParameter, double scale) {
+    private SliderText(Values values, String nameParameter, double scale) {
         this.scale = scale;
-        this.parameters = parameters;
+        this.values = values;
         this.nameParameter = nameParameter;
         panel.add(new JLabel(nameParameter));
 
-        textField.setText(Double.toString(parameters.get(nameParameter)));
+        textField.setText(Double.toString(values.getParameter(nameParameter)));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
         panel.add(textField);
@@ -84,19 +83,19 @@ public class SliderText extends JFrame {
 
     void resetParameter(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
-            parameters.set(nameParameter, Double.parseDouble(textField.getText()));
+            values.setParameter(nameParameter, Double.parseDouble(textField.getText()));
         }
     }
 
-//  x, phi, a, b, I1,
+//  x, phi, dotX, dotPhi, I1,
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static SliderText[] initMSliderText(Parameters parameters, double[] scale) {
-        SliderText[] mSL = new SliderText[parameters.getCountParameters()];
+    public static SliderText[] initMSliderText(Values values, double[] scale) {
+        SliderText[] mSL = new SliderText[values.getCountParameters()];
         int i = 0;
-        for (String key : parameters.getKeyParameters()) {
-            mSL[i] = new SliderText(parameters, key, scale[i]);
+        for (String key : values.getKeyParameters()) {
+            mSL[i] = new SliderText(values, key, scale[i]);
             i++;
         }
         /*
@@ -106,8 +105,8 @@ public class SliderText extends JFrame {
 
         mSL[0] = new SliderText(functions, 0, "x", 1);
         mSL[1] = new SliderText(functions, 1, "phi", 1);
-        mSL[2] = new SliderText(functions, 2, "a", 1);
-        mSL[3] = new SliderText(functions, 3, "b", 1);
+        mSL[2] = new SliderText(functions, 2, "dotX", 1);
+        mSL[3] = new SliderText(functions, 3, "dotPhi", 1);
         mSL[4] = new SliderText(functions, 4, "I1", 1);
         mSL[5] = new SliderText(functions, 5, "I2", 1);
         mSL[6] = new SliderText(functions, 6, "m", 1);

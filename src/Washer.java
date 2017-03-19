@@ -6,12 +6,12 @@ public class Washer {
 
     private Color color;
 
-    private Parameters parameters;
+    private Values values;
     private Functions functions;
 
-    public Washer(Functions functions, Parameters parameters, double t, Color color) {
+    public Washer(Functions functions, Values values, double t, Color color) {
         this.functions = functions;
-        this.parameters = parameters;
+        this.values = values;
         this.color = color;
 
         update(t);
@@ -36,8 +36,8 @@ public class Washer {
     public void update(double t) {
         centerWasher = Setting.findTwoPoint(
                 functions.suspensionPoint(t),
-                parameters.get("x") + Setting.getHeightWasher()/2,
-                parameters.get("phi")
+                values.getParameter("x") + Setting.getHeightWasher()/2,
+                values.getParameter("phi")
         );
     }
 }

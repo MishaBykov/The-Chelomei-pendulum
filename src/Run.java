@@ -3,13 +3,13 @@ import java.awt.*;
 
 public class Run {
     public static void main(String[] args) {
-        Parameters parameters = new Parameters();
-        Functions system = new SystemFunctions(parameters);
-        final Rku rku = new Rku(system, parameters, 1.0 / (Setting.getSpeedDown() * 10));
-        Pendulum pendulum = new Pendulum(system, parameters, rku, Color.magenta);
-        Washer washer = new Washer(system, parameters, rku, Color.black);
+        Values values = new Values();
+        Functions system = new SystemFunctions(values);
+        final Rku rku = new Rku(system, values, 1.0 / (Setting.getSpeedDown() * 10));
+        Pendulum pendulum = new Pendulum(system, values, rku, Color.magenta);
+        Washer washer = new Washer(system, values, rku, Color.black);
         final ImagePanel imagePanel = new ImagePanel(pendulum, washer, rku, 500, 500, Setting.getSpeedDown());
-        final SliderText[] sliderTexts = SliderText.initMSliderText(parameters,
+        final SliderText[] sliderTexts = SliderText.initMSliderText(values,
                 new double[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         );
         final PanelButton panelButton = new PanelButton(imagePanel, sliderTexts);
