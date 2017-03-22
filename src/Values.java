@@ -12,8 +12,11 @@ public class Values {
         String[] parametersName = new String[]{"I0", "I1", "m", "l", "k1", "k2", "M", "g", "alpha", "nu", "theta"};
         double[] parametersValue = new double[]{  1,    1,   1,   1,    1,    1,   1, 9.8,       0,    0,       0};
 
-        String[] pendulumName = new String[]{"x", "phi", "dotX", "dotPhi"};
-        double[] pendulumValue = new double[]{  1,    1,      1,        1};
+        String[] systemName = new String[]{"x", "phi", "dotX", "dotPhi"};
+        double[] systemValue = new double[]{  1,    1,      1,        1};
+
+        String[] pendulumName = new String[]{"x", "dotX"};
+        double[] pendulumValue = new double[]{  1,    1};
 
         String[] washerName = new String[]{"x", "y"};
         double[] washerValue = new double[]{ 0,   0};
@@ -24,12 +27,21 @@ public class Values {
         }
 
         variables = new HashMap<String, HashMap<String, Double> > ();
+
+        variables.put("system", new HashMap<String, Double>());
+        variables.put("systemOrder", new HashMap<String, Double>());
+        for (int i = 0; i < systemName.length; i++) {
+            variables.get("system").put(systemName[i], systemValue[i]);
+            variables.get("systemOrder").put(systemName[i],(double) i);
+        }
+
         variables.put("pendulum", new HashMap<String, Double>());
         variables.put("pendulumOrder", new HashMap<String, Double>());
-        for (int i = 0; i < pendulumName.length; i++) {
-            variables.get("pendulum").put(pendulumName[i], pendulumValue[i]);
-            variables.get("pendulumOrder").put(pendulumName[i],(double) i);
+        for (int i = 0; i < systemName.length; i++) {
+            variables.get("pendulum").put(systemName[i], systemValue[i]);
+            variables.get("pendulumOrder").put(systemName[i],(double) i);
         }
+
         variables.put("washer", new HashMap<String, Double>());
         variables.put("washerOrder", new HashMap<String, Double>());
         for (int i = 0; i < washerName.length; i++) {

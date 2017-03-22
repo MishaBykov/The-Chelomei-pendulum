@@ -1,3 +1,5 @@
+import java.awt.geom.Point2D;
+
 /**
  * M — Масса стержня,<br>
  * m — масса шайбы,<br>
@@ -37,23 +39,20 @@ public class SystemFunctions implements Functions{
     private String[] variables;
 
     public SystemFunctions(Values values) {
-// default:
-        variables = new String[]{"x", "phi", "dotX", "dotPhi"};
-// --------
         this.values = values;
     }
 
-    public double suspensionX(double t) {
-        return values.getParameter("alpha") * Math.sin(values.getParameter("theta") * t) * Math.sin(values.getParameter("nu"));
-    }
-
-    public double suspensionY(double t){
-        return  values.getParameter("alpha") * Math.sin( values.getParameter("theta") * t) * Math.cos( values.getParameter("nu"));
+    @Override
+    public Point2D.Double suspensionPoint(double t) {
+        return new Point2D.Double(
+                values.getParameter("alpha") * Math.sin(values.getParameter("theta") * t) * Math.sin(values.getParameter("nu")),
+                values.getParameter("alpha") * Math.sin(values.getParameter("theta") * t) * Math.cos(values.getParameter("nu"))
+        );
     }
 
     @Override
-    public String[] getNameVariables() {
-        return variables;
+    public String getNameVariables() {
+        return "system";
     }
 
     /**
