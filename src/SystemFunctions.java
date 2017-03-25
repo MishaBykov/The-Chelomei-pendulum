@@ -23,13 +23,10 @@ public class SystemFunctions implements Functions{
     private String nameVariables = "system";
     private HashMap<String, Double> variables;
     private HashMap<String, Double> parameters;
-    private boolean crash;
-
 
     public SystemFunctions(Values values) {
         parameters = values.getParameters();
         variables = values.getVariables(nameVariables);
-        crash = parameters.get("l") < variables.get("x");
     }
 
     @Override
@@ -98,11 +95,4 @@ public class SystemFunctions implements Functions{
         return 4;
     }
 
-    public boolean isCrash() {
-        return crash;
-    }
-
-    public void setCrash() {
-        crash = parameters.get("l") < variables.get("x");
-    }
 }
