@@ -1,34 +1,36 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.util.HashMap;
 
-public class SliderText extends JFrame {
+public class SliderText extends JPanel {
 
-    public final JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//    public final JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
-    private String nameParameter;
-    private Values values;
+    private HashMap<String, Double> groups;
+    private String name;
     private double scale;
 
-    private SliderText(Values values, String nameParameter, double scale) {
+    private SliderText(HashMap<String, Double> groups, String name, double scale) {
+        super(new FlowLayout(FlowLayout.LEFT));
         this.scale = scale;
-        this.values = values;
-        this.nameParameter = nameParameter;
-        panel.add(new JLabel(nameParameter));
+        this.name = name;
+        this.groups = groups;
+        this.add(new JLabel(name));
 
-        textField.setText(Double.toString(values.getParameter(nameParameter)));
+        textField.setText(Double.toString(groups.get(name)));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
-        panel.add(textField);
+        this.add(textField);
 
         slider.setPaintTicks(true);
         slider.setMajorTickSpacing(20);
         slider.setMinorTickSpacing(5);
         slider.addChangeListener(cl);
         slider.setVisible(false);
-        panel.add(slider);
+        this.add(slider);
     }
 
     ChangeListener cl = new ChangeListener() {
@@ -83,7 +85,7 @@ public class SliderText extends JFrame {
 
     void resetParameter(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
-            values.setParameter(nameParameter, Double.parseDouble(textField.getText()));
+            groups.put(name, Double.parseDouble(textField.getText()));
         }
     }
 
@@ -91,7 +93,7 @@ public class SliderText extends JFrame {
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static SliderText[] initMSliderText(Values values, double[] scale) {
+    public static SliderText[] initMSliderText(HashMap<String, Double> groups, double[] scale) {
         SliderText[] mSL = new SliderText[values.getCountParameters()];
         int i = 0;
         for (String key : values.getKeyParameters()) {
