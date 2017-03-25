@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.util.ArrayList;
 
 public class ImagePanel extends JComponent implements ActionListener {
     private Timer timer;
@@ -11,22 +12,20 @@ public class ImagePanel extends JComponent implements ActionListener {
     private int dy;
     private Pendulum pendulum;
     private Washer washer;
-    private Rku rku;
+    private ArrayList<RK4> rk4List = new ArrayList<>();
 
     private long[] time = new long[2];
 
 
-    public ImagePanel(Pendulum pendulum, Washer washer, Rku rku, int height, int width, int delay) {
+    public ImagePanel(Pendulum pendulum, Washer washer, RK4 rk4, int height, int width, int delay) {
         this.pendulum = pendulum;
         this.washer = washer;
-        this.rku = rku;
+        this.rk4List.add(rk4);
         timer = new Timer(delay, this);
         this.width = width;
         this.height = height;
         dx = width / 2;
         dy = height / 2;
-
-
 
         setPreferredSize(new Dimension(width, height));
     }
@@ -48,14 +47,22 @@ public class ImagePanel extends JComponent implements ActionListener {
     }
 
     public void update(){
-        washer.update(rku.getT());
-        pendulum.update(rku.getT());
+        double t = rk4List.get(0).getT();
+        for (int i = 1; i < rk4List.size(); i++){
+            if (rk4List.get(i).getT() != t){
+                System.out.println("Ошибка(IP update)");
+            }
+        }
+        washer.update(t);
+        pendulum.update(t);
         repaint();
     }
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        rku.toStep((time[1] - time[0])/ Setting.getSpeedDown());
+        for (int i = 0; i < rk4List.size(); i++){
+            rk4List.get(i).toStep((time[1] - time[0])/ Setting.getSpeedDown());
+        }
         time[0] = time[1];
 
         update();
@@ -93,5 +100,9 @@ public class ImagePanel extends JComponent implements ActionListener {
 
                 Setting.getWidthWasher()*Setting.getScale(), Setting.getHeightWasher()*Setting.getScale())
         );
+    }
+
+    public void setRk4List(RK4 rk4List) {
+        this.rk4List = rk4List;
     }
 }
