@@ -1,6 +1,4 @@
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class Values {
     private HashMap<String, Double> parameters;
@@ -50,20 +48,8 @@ public class Values {
         }
     }
 
-    public int getCountParameters() {
-        return parameters.size();
-    }
-
-    public Set<String> getKeyParameters() {
-        return parameters.keySet();
-    }
-
-    public void setParameter(String nameParameter, double newValue) {
-        parameters.put(nameParameter, newValue);
-    }
-
-    public double getParameter(String name) {
-        return parameters.get(name);
+    public HashMap<String, Double> getParameters() {
+        return parameters;
     }
 
     public HashMap<String, Double> getVariables(String nameVariables) {

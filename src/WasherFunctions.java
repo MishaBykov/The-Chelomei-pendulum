@@ -1,3 +1,4 @@
+import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -6,48 +7,30 @@ import java.util.Set;
  *
  */
 public class WasherFunctions implements Functions{
-    private Map<String, Double> parameters;
-    private String[] variables;
-    public WasherFunctions() {
-// default:
-        variables = new String[]{};
-        String[] parametersName = new String[]{};
-        double[] parametersValue = new double[]{};
-// --------
-        parameters = new HashMap<String, Double>();
-        for (int i = 0; i < parametersName.length; i++) {
-            parameters.put(parametersName[i], parametersValue[i]);
-        }
-    }
-
-    public double suspensionX(double t) {
-        return parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.sin(parameters.get("nu"));
-    }
-
-    public double suspensionY(double t){
-        return  parameters.get("alpha") * Math.sin( parameters.get("theta") * t) * Math.cos( parameters.get("nu"));
+    private String nameVariables = "washer";
+    private HashMap<String, Double> variables;
+    private HashMap<String, Double> parameters;
+    public WasherFunctions(Values values) {
+        parameters = values.getParameters();
+        variables = values.getVariables(nameVariables);
     }
 
     @Override
-    public String[] getNameVariables() {
-        return variables;
+    public String getNameVariables() {
+        return nameVariables;
     }
 
     /**
-     *
+     * args[0] = x
+     * args[1] = y
      */
     @Override
     public double getResultFunction(double t, int id, double ... args) {
-        return 0;
-    }
-    private double f(int id, double t) {
         switch (id) {
+            case 0:
+                return 0;
             case 1:
-                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
-                        * Math.sin( parameters.get("nu") * t);
-            case 2:
-                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
-                        * Math.cos( parameters.get("nu") * t);
+                return -parameters.get("g");
             default:
                 return -1;
         }
@@ -56,6 +39,12 @@ public class WasherFunctions implements Functions{
     @Override
     public int getCountFunctions() {
         return 2;
+    }
+
+    @Override
+    public Point2D.Double suspensionPoint(double t) {
+        System.out.println("Ошибка");
+        return null;
     }
 }
 

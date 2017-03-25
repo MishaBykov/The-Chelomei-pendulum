@@ -29,6 +29,7 @@ import java.awt.geom.Point2D;
  * }<br>
  */
 public class PendulumFunctions implements Functions {
+    private String nameVariables = "pendulum";
     private Values values;
     private String[] variables;
 
@@ -48,13 +49,13 @@ public class PendulumFunctions implements Functions {
     }
 
     @Override
-    public String[] getNameVariables() {
-        return variables;
+    public String getNameVariables() {
+        return nameVariables;
     }
 
     /**
      * phi = args[0]
-     * dotX = args[1]
+     * dotPhi = args[1]
      */
     @Override
     public double getResultFunction(double t, int id, double... args) {
