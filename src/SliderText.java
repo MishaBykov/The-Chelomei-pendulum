@@ -104,6 +104,31 @@ public class SliderText extends JPanel {
             mSL[i] = new SliderText(groups, key, scales.get(key));
             i++;
         }
+        /*
+        mSL[0] = new SliderText(functions, 0, "x", 1);
+        mSL[1] = new SliderText(functions, 1, "phi", 1);
+        mSL[2] = new SliderText(functions, 2, "dotX", 1);
+        mSL[3] = new SliderText(functions, 3, "dotPhi", 1);
+        mSL[4] = new SliderText(functions, 4, "I1", 1);
+        mSL[5] = new SliderText(functions, 5, "I2", 1);
+        mSL[6] = new SliderText(functions, 6, "m", 1);
+        mSL[7] = new SliderText(functions, 7, "L", 1);
+        mSL[8] = new SliderText(functions, 8, "k1", 1);
+        mSL[9] = new SliderText(functions, 9, "k2", 1);
+        mSL[10] = new SliderText(functions, 10, "M", 1);
+        mSL[11] = new SliderText(functions, 11, "g", 1);
+        mSL[12] = new SliderText(functions, 12, "alpha", 1);
+        mSL[14] = new SliderText(functions, 13, "nu", 1);
+        mSL[13] = new SliderText(functions, 14, "theta", 1);
+
+        mSL[0].slider.setVisible(false);
+        mSL[1].slider.setVisible(false);
+        mSL[2].slider.setVisible(false);
+        mSL[4].slider.setMaximum(500);
+        mSL[8].slider.setMaximum(314);
+        mSL[4].textField.setText("" + functions.getParameters(7));
+        mSL[8].textField.setText("" + functions.getParameters(8));
+        */
 
         return mSL;
     }
