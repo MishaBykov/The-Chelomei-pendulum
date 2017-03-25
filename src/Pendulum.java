@@ -48,10 +48,6 @@ public class Pendulum {
         this.color = color;
     }
 
-    public void setSuspensionPoint(double x, double y) {
-        suspensionPoint.setLocation(x ,y);
-    }
-
     public void setSuspensionPoint(Point2D.Double point) {
         suspensionPoint.setLocation(point);
     }
