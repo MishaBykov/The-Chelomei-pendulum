@@ -39,7 +39,7 @@ public class Setting {
         result.put("I1", 1.0);
         result.put("I2", 1.0);
         result.put("m", 1.0);
-        result.put("L", 1.0);
+        result.put("l", 1.0);
         result.put("k1", 1.0);
         result.put("k2", 1.0);
         result.put("M", 1.0);

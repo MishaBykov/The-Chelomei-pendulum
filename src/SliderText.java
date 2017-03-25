@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Set;
 
 public class SliderText extends JPanel {
 
@@ -93,11 +94,14 @@ public class SliderText extends JPanel {
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static SliderText[] initMSliderText(HashMap<String, Double> groups, double[] scale) {
-        SliderText[] mSL = new SliderText[values.getCountParameters()];
+    public static SliderText[] initMSliderText(HashMap<String, Double> groups) {
+        SliderText[] mSL = new SliderText[groups.size()];
+        Set<String> keys = groups.keySet();
+        HashMap<String, Double> scales = Setting.getScaleSlider();
+
         int i = 0;
-        for (String key : values.getKeyParameters()) {
-            mSL[i] = new SliderText(values, key, scale[i]);
+        for (String key : keys) {
+            mSL[i] = new SliderText(groups, key, scales.get(key));
             i++;
         }
 
