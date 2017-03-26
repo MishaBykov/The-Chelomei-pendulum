@@ -5,20 +5,18 @@ public class RK4 {
     private double h, t;
     private double[][] k;
     private Functions functions;
-    private Values values;
     private HashMap<String, Double> variables;
     private String[] namesVariables;
     private double[] valueVariables;
 
     private int countExample;
 
-    RK4(Functions functions, Values values, String nameVariables, double t, double step) {
-        this.values = values;
-        variables = values.getVariables(nameVariables);
+    RK4(Functions functions, Values values, double t, double step) {
+        variables = values.getVariables(functions.getNameVariables());
         countExample = functions.getCountFunctions();
         k = new double[4][countExample];
 
-        HashMap<String, Double> ov = values.getVariables(nameVariables+"Order");
+        HashMap<String, Double> ov = values.getVariables(functions.getNameVariables()+"Order");
         Set<String> keys = ov.keySet();
         namesVariables = new String[ov.size()];
         for(String key : keys) {
@@ -61,14 +59,6 @@ public class RK4 {
         }
 
         t += h;
-    }
-
-
-    public void toStep(long time) {
-        while (time > 0) {
-            toStep();
-            time--;
-        }
     }
 
     public double getT() {

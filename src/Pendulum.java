@@ -42,8 +42,6 @@ public class Pendulum {
         return length;
     }
 
-
-
     public void setColor(Color color) {
         this.color = color;
     }

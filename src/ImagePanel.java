@@ -17,7 +17,7 @@ public class ImagePanel extends JComponent implements ActionListener {
     private long[] time = new long[2];
 
 
-    public ImagePanel(Pendulum pendulum, Washer washer, RK4 rk4, int height, int width, int delay) {
+    public ImagePanel(CrashSystem crashSystem, Pendulum pendulum, Washer washer, RK4 rk4, int height, int width, int delay) {
         this.pendulum = pendulum;
         this.washer = washer;
         this.rk4List.add(rk4);
@@ -60,8 +60,13 @@ public class ImagePanel extends JComponent implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        for (int i = 0; i < rk4List.size(); i++){
-            rk4List.get(i).toStep((time[1] - time[0])/ Setting.getSpeedDown());
+        long i = (time[1] - time[0])/ Setting.getSpeedDown();
+        while (i > 0) {
+            for (int j = 0; j < rk4List.size(); j++){
+                rk4List.get(j).toStep();
+
+            }
+            i--;
         }
         time[0] = time[1];
 
@@ -102,7 +107,15 @@ public class ImagePanel extends JComponent implements ActionListener {
         );
     }
 
-    public void setRk4List(RK4 rk4List) {
-        this.rk4List = rk4List;
+    public ArrayList<RK4> getRk4List() {
+        return rk4List;
+    }
+
+    public Pendulum getPendulum() {
+        return pendulum;
+    }
+
+    public Washer getWasher() {
+        return washer;
     }
 }

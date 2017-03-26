@@ -13,7 +13,7 @@ public class Values {
         String[] systemName = new String[]{"x", "phi", "dotX", "dotPhi"};
         double[] systemValue = new double[]{  1,    1,      1,        1};
 
-        String[] pendulumName = new String[]{"x", "dotX"};
+        String[] pendulumName = new String[]{"phi", "dotPhi"};
         double[] pendulumValue = new double[]{  1,    1};
 
         String[] washerName = new String[]{"x", "y"};
