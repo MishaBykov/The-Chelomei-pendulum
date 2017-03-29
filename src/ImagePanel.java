@@ -13,11 +13,13 @@ public class ImagePanel extends JComponent implements ActionListener {
     private Pendulum pendulum;
     private Washer washer;
     private ArrayList<RK4> rk4List = new ArrayList<>();
+    CrashSystem crashSystem;
 
     private long[] time = new long[2];
 
 
     public ImagePanel(CrashSystem crashSystem, Pendulum pendulum, Washer washer, RK4 rk4, int height, int width, int delay) {
+        this.crashSystem = crashSystem;
         this.pendulum = pendulum;
         this.washer = washer;
         this.rk4List.add(rk4);
@@ -48,11 +50,6 @@ public class ImagePanel extends JComponent implements ActionListener {
 
     public void update(){
         double t = rk4List.get(0).getT();
-        for (int i = 1; i < rk4List.size(); i++){
-            if (rk4List.get(i).getT() != t){
-                System.out.println("Ошибка(IP update)");
-            }
-        }
         washer.update(t);
         pendulum.update(t);
         repaint();

@@ -8,7 +8,7 @@ public class Values {
     public Values() {
 
         String[] parametersName = new String[]{"I0", "I1", "m", "l", "k1", "k2", "M", "g", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{  1,    1,   1,   1,    1,    1,   1, 9.8,       0,    0,       0};
+        double[] parametersValue = new double[]{  1,    1,   1,   2,    1,    1,   1, 9.8,       0,    0,       0};
 
         String[] systemName = new String[]{"x", "phi", "dotX", "dotPhi"};
         double[] systemValue = new double[]{  1,    1,      1,        1};
