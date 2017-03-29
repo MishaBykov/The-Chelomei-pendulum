@@ -2,11 +2,11 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 
 public class Setting {
-    private static double step = 1.0 / (Setting.getSpeedDown() * 10);
     private static double widthWasher = 0.1;
     private static double heightWasher = 0.1;
     private static double scale = 100;
     private static int speedDown = 25;
+    private static double step = 1.0 / (speedDown * 10);
 
     private Setting(){}
 

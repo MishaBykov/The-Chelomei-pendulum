@@ -9,7 +9,7 @@ public class CrashSystem {
         this.values = values;
     }
 
-    private void systemToCrash(List<RK4> rk4List, Pendulum pendulum, Washer washer){
+    public void systemToCrash(List<RK4> rk4List, Pendulum pendulum, Washer washer){
         values.getVariables("pendulum").put("phi", values.getVariables("system").get("phi"));
         values.getVariables("pendulum").put("dotPhi", values.getVariables("system").get("dotPhi"));
         double t = rk4List.get(0).getT();
