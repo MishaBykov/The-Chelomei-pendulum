@@ -1,13 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
-public class PanelButton {
-    public JPanel panel = new JPanel();
+public class PanelButton extends JPanel{
     private ImagePanel imagePanel;
     private final JButton buttonStartStop = new JButton();
     private final JButton buttonReset = new JButton();
-    private SliderText[] masSliderText;
+    private ArrayList<SliderText> sliderTexts;
 
     private ActionListener startStop = new ActionListener() {
         private boolean pulsing = false;
@@ -28,28 +28,28 @@ public class PanelButton {
     private ActionListener reset = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (SliderText aMasSliderText : masSliderText) {
-                aMasSliderText.resetParameter();
+            for (SliderText sliderText : sliderTexts) {
+                sliderText.resetParameter();
             }
             imagePanel.update();
         }
     };
 
-    public PanelButton(final ImagePanel imagePanel, SliderText[] masSliderText) {
+    public PanelButton(final ImagePanel imagePanel, ArrayList<SliderText> sliderTexts) {
         this.imagePanel = imagePanel;
-        this.masSliderText = masSliderText;
+        this.sliderTexts = sliderTexts;
         GridLayout gl = new GridLayout(3, 1);
         gl.setVgap(10);
-        panel.setLayout(gl);
+        this.setLayout(gl);
 
         buttonStartStop.setText("Start");
         buttonStartStop.setPreferredSize(new Dimension(70, 26));
         buttonStartStop.addActionListener(startStop);
-        panel.add(buttonStartStop);
+        this.add(buttonStartStop);
 
         buttonReset.setText("Reset");
         buttonReset.setPreferredSize(new Dimension(70, 26));
         buttonReset.addActionListener(reset);
-        panel.add(buttonReset);
+        this.add(buttonReset);
     }
 }

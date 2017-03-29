@@ -23,6 +23,7 @@ public class Pendulum {
 
         this.color = color;
 
+        suspensionPoint = new Point2D.Double();
         update(t);
     }
 
