@@ -95,13 +95,12 @@ public class SliderText extends JPanel {
 //  M, alpha, theta, nu
 
     public static SliderText[] initMSliderText(HashMap<String, Double> groups) {
-        SliderText[] mSL = new SliderText[groups.size()];
         Set<String> keys = groups.keySet();
         HashMap<String, Double> scales = Setting.getScaleSlider();
-
+        SliderText[] mST = new SliderText[groups.size()];
         int i = 0;
         for (String key : keys) {
-            mSL[i] = new SliderText(groups, key, scales.get(key));
+            mST[i] = new SliderText(groups, key, scales.get(key));
             i++;
         }
         /*
@@ -130,7 +129,7 @@ public class SliderText extends JPanel {
         mSL[8].textField.setText("" + functions.getParameters(8));
         */
 
-        return mSL;
+        return mST;
     }
 }
 

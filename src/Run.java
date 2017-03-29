@@ -5,16 +5,20 @@ public class Run {
     public static void main(String[] args) {
         Values values = new Values();
         Functions system = new SystemFunctions(values);
-        final RK4 RK4 = new RK4(system, values, 1.0 / (Setting.getSpeedDown() * 10));
-        Pendulum pendulum = new Pendulum(system, values, RK4, Color.magenta);
-        Washer washer = new Washer(system, values, RK4, Color.black);
-        final ImagePanel imagePanel = new ImagePanel(pendulum, washer, RK4, 500, 500, Setting.getSpeedDown());
-        final SliderText[] sliderTexts = SliderText.initMSliderText(values,
-                new double[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        );
-        final PanelButton panelButton = new PanelButton(imagePanel, sliderTexts);
+        CrashSystem crashSystem = new CrashSystem(values);
+        Pendulum pendulum = new Pendulum(system, values, 0, Color.magenta);
+        Washer washer = new Washer(system, values, 0, Color.black);
+        final RK4 RK4 = new RK4(system, values, 0.0, Setting.getSpeedDown());
+        final ImagePanel imagePanel = new ImagePanel(crashSystem, pendulum, washer,
+                RK4, 500, 500, Setting.getSpeedDown());
+        final SliderText[] sliderTextsV = SliderText.initMSliderText(values.getVariables("system"));
+        final SliderText[] sliderTextsP = SliderText.initMSliderText(values.getParameters());
+        final PanelButton panelButton = new PanelButton(imagePanel, sliderTextsV);
         final JPanel mSliderText = new JPanel(new GridLayout(0, 2));
-        for (SliderText sliderText : sliderTexts) {
+        for (SliderText sliderText : sliderTextsV) {
+            mSliderText.add(sliderText);
+        }
+        for (SliderText sliderText : sliderTextsP) {
             mSliderText.add(sliderText);
         }
 
