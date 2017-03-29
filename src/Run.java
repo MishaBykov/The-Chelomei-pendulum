@@ -9,7 +9,7 @@ public class Run {
         CrashSystem crashSystem = new CrashSystem(values);
         Pendulum pendulum = new Pendulum(system, values, 0, Color.magenta);
         Washer washer = new Washer(system, values, 0, Color.black);
-        RK4 RK4 = new RK4(system, values, 0.0, Setting.getSpeedDown());
+        RK4 RK4 = new RK4(system, values, 0.0, Setting.getStep());
         final ImagePanel imagePanel = new ImagePanel(crashSystem, pendulum, washer,
                 RK4, 500, 500, Setting.getSpeedDown());
         ArrayList<SliderText> sliderTexts = SliderText.initMSliderText(new ArrayList<SliderText>(),
