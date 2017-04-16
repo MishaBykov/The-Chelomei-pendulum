@@ -1,40 +1,21 @@
+import Interface.Functions;
+
 import java.awt.geom.Point2D;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
- * M — Масса стержня,                                                               <br>
- * m — масса шайбы,                                                                 <br>
- * t — время,                                                                       <br>
- * I0 — момент инерции стержня без шайбы относительно оси вращения,                 <br>
- * I1 + mx2 — момент инерции шайбы,                                                 <br>
- * I1 — собственный момент инерции шайбы,                                           <br>
- * x — текущая координата шайбы, отсчитываемая вдоль стержня,                       <br>
- * φ — текущий угол поворота стержня при колебаниях, отсчитываемый от вертикали,    <br>
- * L — расстояние от центра массы стержня до точки подвеса,                         <br>
- * (Считаю стержень равномерно-распределенной массы)                                 <br>
- * g — ускорение свободного падения,                                                <br>
- * k1φ' — момент трения, создаваемый движением всей системы,                        <br>
- * k2x' — сила трения шайбы о стержень,                                             <br>
  * f1(t) — вертикальная составляющая колебаний точки подвеса,                       <br>
  * f2(t) — горизонтальная составляющая колебаний точки подвеса.                     <br>
  */
 
-public class SystemFunctions implements Functions{
+public class SystemFunctions implements Functions {
     private String nameVariables = "system";
-    private HashMap<String, Double> variables;
-    private HashMap<String, Double> parameters;
+    private Map<String, Double> variables;
+    private Map<String, Double> parameters;
 
     public SystemFunctions(Values values) {
         parameters = values.getParameters();
         variables = values.getVariables(nameVariables);
-    }
-
-    @Override
-    public Point2D.Double suspensionPoint(double t) {
-        return new Point2D.Double(
-                parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.sin(parameters.get("nu")),
-                parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.cos(parameters.get("nu"))
-        );
     }
 
     @Override

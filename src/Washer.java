@@ -1,6 +1,8 @@
+import Interface.Functions;
+
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.HashMap;
+import java.util.Map;
 
 public class Washer {
     private Point2D.Double centerWasher;
@@ -9,7 +11,7 @@ public class Washer {
 
     private Functions functions;
     private Values values;
-    private HashMap<String, Double> variables;
+    private Map<String, Double> variables;
     private boolean fSystem;
 
     public Washer(Functions functions, Values values, double t, Color color) {
@@ -52,9 +54,9 @@ public class Washer {
 
     public void update(double t) {
         if (fSystem) {
-            centerWasher = Setting.findTwoPoint(
+            centerWasher = Config.findTwoPoint(
                     functions.suspensionPoint(t),
-                    variables.get("x") + Setting.getHeightWasher() / 2,
+                    variables.get("x") + Config.getHeightWasher() / 2,
                     variables.get("phi")
             );
         }

@@ -1,6 +1,8 @@
+import Interface.Functions;
+
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.HashMap;
+import java.util.Map;
 
 public class Pendulum {
     private Color color;
@@ -8,22 +10,17 @@ public class Pendulum {
     private double length;
     private double angle;
     private Point2D.Double suspensionPoint;
-    private Functions functions;
-    private HashMap<String,Double> variables;
-    private HashMap<String,Double> parameters;
+    private GetSuspensionPoint updateSuspensionPoint;
+    private Map<String,Double> variables;
+    private Map<String,Double> parameters;
 
-    private Values values;
-
-    public Pendulum(Functions functions, Values values, double t, Color color) {
-        this.functions = functions;
-        variables = values.getVariables(functions.getNameVariables());
+    public Pendulum(String nameVariables, GetSuspensionPoint getSuspensionPoint, Values values, double t, Color color) {
+        this.updateSuspensionPoint = getSuspensionPoint;
+        variables = values.getVariables(nameVariables);
         parameters = values.getParameters();
-
-        this.values = values;
 
         this.color = color;
 
-        suspensionPoint = new Point2D.Double();
         update(t);
     }
 
@@ -48,7 +45,7 @@ public class Pendulum {
     }
 
     public void setSuspensionPoint(Point2D.Double point) {
-        suspensionPoint.setLocation(point);
+        suspensionPoint = point;
     }
 
     public void setAngle(double angle) {
@@ -59,14 +56,9 @@ public class Pendulum {
         this.length = length;
     }
 
-    public void setFunctions(Functions functions) {
-        this.functions = functions;
-        variables = values.getVariables(functions.getNameVariables());
-    }
-
     public void update(double t) {
         setAngle(variables.get("phi"));
         setLength(parameters.get("l"));
-        setSuspensionPoint(functions.suspensionPoint(t));
+        setSuspensionPoint(updateSuspensionPoint.get(t));
     }
 }

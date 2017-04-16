@@ -1,12 +1,12 @@
+import Interface.Functions;
+
 import java.awt.geom.Point2D;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
  */
-public class WasherFunctions implements Functions{
+public class WasherFunctions implements Functions {
     private String nameVariables = "washer";
     private HashMap<String, Double> variables;
     private HashMap<String, Double> parameters;

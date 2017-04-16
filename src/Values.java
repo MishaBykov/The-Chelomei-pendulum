@@ -1,14 +1,30 @@
 import java.util.HashMap;
+import java.util.Map;
 
+/*
+ * M — Масса стержня,                                                               <br>
+ * m — масса шайбы,                                                                 <br>
+ * t — время,                                                                       <br>
+ * I0 — момент инерции стержня без шайбы относительно оси вращения,                 <br>
+ * I1 + mx2 — момент инерции шайбы,                                                 <br>
+ * I1 — собственный момент инерции шайбы,                                           <br>
+ * x — текущая координата шайбы, отсчитываемая вдоль стержня,                       <br>
+ * φ — текущий угол поворота стержня при колебаниях, отсчитываемый от вертикали,    <br>
+ * L — расстояние от центра массы стержня до точки подвеса,                         <br>
+ * (Считаю стержень равномерно-распределенной массы)                                 <br>
+ * g — ускорение свободного падения,                                                <br>
+ * k1φ' — момент трения, создаваемый движением всей системы,                        <br>
+ * k2x' — сила трения шайбы о стержень,                                             <br>
+ */
 public class Values {
-    private HashMap<String, Double> parameters;
-    private HashMap<String, HashMap<String, Double>> variables;
+    private Map<String, Double> parameters;
+    private Map<String, Map<String, Double>> variables;
 
 
     public Values() {
 
         String[] parametersName = new String[]{"I0", "I1", "m", "l", "k1", "k2", "M", "g", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{  1,    1,   1,   2,    1,    1,   1, 9.8,       0,    0,       0};
+        double[] parametersValue = new double[]{ 1 ,   1 ,  1 ,  2 ,   1 ,   1 ,  1 , 9.8,      0 ,   0 ,      0 };
 
         String[] systemName = new String[]{"x", "phi", "dotX", "dotPhi"};
         double[] systemValue = new double[]{  1,    1,      1,        1};
@@ -24,7 +40,7 @@ public class Values {
             parameters.put(parametersName[i], parametersValue[i]);
         }
 
-        variables = new HashMap<String, HashMap<String, Double> > ();
+        variables = new HashMap<String, Map<String, Double> > ();
 
         variables.put("system", new HashMap<String, Double>());
         variables.put("systemOrder", new HashMap<String, Double>());
@@ -48,11 +64,11 @@ public class Values {
         }
     }
 
-    public HashMap<String, Double> getParameters() {
+    public Map<String, Double> getParameters() {
         return parameters;
     }
 
-    public HashMap<String, Double> getVariables(String nameVariables) {
+    public Map<String, Double> getVariables(String nameVariables) {
         return variables.get(nameVariables);
     }
 }

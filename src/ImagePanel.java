@@ -43,8 +43,8 @@ public class ImagePanel extends JComponent implements ActionListener {
 
     private Point2D.Double toSystem(Point2D.Double point){
         return new Point2D.Double(
-                dx + Setting.getScale() * point.getX(),
-                dy - Setting.getScale() * point.getY()
+                dx + Config.getScale() * point.getX(),
+                dy - Config.getScale() * point.getY()
         );
     }
 
@@ -57,7 +57,7 @@ public class ImagePanel extends JComponent implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        long i = (time[1] - time[0])/ Setting.getSpeedDown();
+        long i = (time[1] - time[0])/ Config.getSpeedDown();
         while (i > 0) {
             for (int j = 0; j < rk4List.size(); j++){
                 rk4List.get(j).toStep();
@@ -88,7 +88,7 @@ public class ImagePanel extends JComponent implements ActionListener {
                 new Line2D.Double(
                         toSystem(pendulum.getSuspensionPoint()),
                         toSystem(
-                                Setting.findTwoPoint(
+                                Config.findTwoPoint(
                                 pendulum.getSuspensionPoint(),
                                 pendulum.getLength(),
                                 pendulum.getAngle()
@@ -99,10 +99,10 @@ public class ImagePanel extends JComponent implements ActionListener {
 
         g2d.setColor(washer.getColor());
         g2d.draw(new Ellipse2D.Double(
-                toSystem(washer.getCenterWasher()).getX()- Setting.getWidthWasher()/2 * Setting.getScale(),
-                toSystem(washer.getCenterWasher()).getY()- Setting.getHeightWasher()/2 * Setting.getScale(),
+                toSystem(washer.getCenterWasher()).getX()- Config.getWidthWasher()/2 * Config.getScale(),
+                toSystem(washer.getCenterWasher()).getY()- Config.getHeightWasher()/2 * Config.getScale(),
 
-                Setting.getWidthWasher()*Setting.getScale(), Setting.getHeightWasher()*Setting.getScale())
+                Config.getWidthWasher()* Config.getScale(), Config.getHeightWasher()* Config.getScale())
         );
     }
 

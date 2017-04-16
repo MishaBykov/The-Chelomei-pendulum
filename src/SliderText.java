@@ -97,7 +97,7 @@ public class SliderText extends JPanel {
 
     public static ArrayList<SliderText> initMSliderText(ArrayList<SliderText> sliderTexts, HashMap<String, Double> groups) {
         Set<String> keys = groups.keySet();
-        HashMap<String, Double> scales = Setting.getScaleSlider();
+        HashMap<String, Double> scales = Config.getScaleSlider();
         for (String key : keys) {
             sliderTexts.add(new SliderText(groups, key, scales.get(key)));
         }
