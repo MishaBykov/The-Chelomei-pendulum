@@ -1,15 +1,14 @@
-import Interface.Functions;
-
 import java.awt.geom.Point2D;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  */
 public class WasherFunctions implements Functions {
     private String nameVariables = "washer";
-    private HashMap<String, Double> variables;
-    private HashMap<String, Double> parameters;
+    private Map<String, Double> variables;
+    private Map<String, Double> parameters;
     public WasherFunctions(Values values) {
         parameters = values.getParameters();
         variables = values.getVariables(nameVariables);
@@ -39,12 +38,6 @@ public class WasherFunctions implements Functions {
     @Override
     public int getCountFunctions() {
         return 2;
-    }
-
-    @Override
-    public Point2D.Double suspensionPoint(double t) {
-        System.out.println("Ошибка");
-        return null;
     }
 }
 

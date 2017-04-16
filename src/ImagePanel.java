@@ -13,7 +13,7 @@ public class ImagePanel extends JComponent implements ActionListener {
     private Pendulum pendulum;
     private Washer washer;
     private ArrayList<RK4> rk4List = new ArrayList<>();
-    CrashSystem crashSystem;
+    private CrashSystem crashSystem;
 
     private long[] time = new long[2];
 
@@ -59,11 +59,11 @@ public class ImagePanel extends JComponent implements ActionListener {
         time[1] = System.currentTimeMillis();
         long i = (time[1] - time[0])/ Config.getSpeedDown();
         while (i > 0) {
-            for (int j = 0; j < rk4List.size(); j++){
-                rk4List.get(j).toStep();
+            for (RK4 aRk4List : rk4List) {
+                aRk4List.toStep();
             }
             i--;
-            crashSystem.setCrash();
+            crashSystem.setCrashSystem();
             if (crashSystem.isCrash())
                 crashSystem.systemToCrash(rk4List, pendulum, washer);
         }

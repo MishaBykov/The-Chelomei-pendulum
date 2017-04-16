@@ -1,5 +1,3 @@
-package Interface;
-
 import java.awt.geom.Point2D;
 import java.util.Set;
 

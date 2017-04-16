@@ -1,13 +1,12 @@
-import Interface.Functions;
-
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class RK4 {
     private double h, t;
     private double[][] k;
     private Functions functions;
-    private HashMap<String, Double> variables;
+    private Map<String, Double> variables;
     private String[] namesVariables;
     private double[] valueVariables;
 
@@ -18,7 +17,7 @@ public class RK4 {
         countExample = functions.getCountFunctions();
         k = new double[4][countExample];
 
-        HashMap<String, Double> ov = values.getVariables(functions.getNameVariables()+"Order");
+        Map<String, Double> ov = values.getVariables(functions.getNameVariables()+"Order");
         Set<String> keys = ov.keySet();
         namesVariables = new String[ov.size()];
         for(String key : keys) {
