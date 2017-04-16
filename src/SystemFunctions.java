@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class SystemFunctions implements Functions {
     private String nameVariables = "system";
-    private Map<String, Double> variables;
     private Map<String, Double> parameters;
+//    private Map<String, Double> variables;
 
     public SystemFunctions(Values values) {
         parameters = values.getParameters();
-        variables = values.getVariables(nameVariables);
+//        variables = values.getVariables(nameVariables);
     }
 
     @Override

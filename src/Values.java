@@ -27,13 +27,10 @@ public class Values {
         double[] parametersValue = new double[]{ 1 ,   1 ,  1 ,  2 ,   1 ,   1 ,  1 , 9.8,      0 ,   0 ,      0 };
 
         String[] systemName = new String[]{"x", "phi", "dotX", "dotPhi"};
-        double[] systemValue = new double[]{  1,    1,      1,        1};
+        double[] systemValue = new double[]{1,    1,      1,      1};
 
-        String[] pendulumName = new String[]{"phi", "dotPhi"};
-        double[] pendulumValue = new double[]{  1,    1};
-
-        String[] washerName = new String[]{"x", "y"};
-        double[] washerValue = new double[]{ 0,   0};
+        String[] washerName = new String[]{"x", "y", "dotX", "dotY"};
+        double[] washerValue = new double[]{0,   0,     0,      0};
 
         parameters = new HashMap<String, Double>();
         for (int i = 0; i < parametersName.length; i++) {
@@ -47,13 +44,6 @@ public class Values {
         for (int i = 0; i < systemName.length; i++) {
             variables.get("system").put(systemName[i], systemValue[i]);
             variables.get("systemOrder").put(systemName[i],(double) i);
-        }
-
-        variables.put("pendulum", new HashMap<String, Double>());
-        variables.put("pendulumOrder", new HashMap<String, Double>());
-        for (int i = 0; i < systemName.length; i++) {
-            variables.get("pendulum").put(systemName[i], systemValue[i]);
-            variables.get("pendulumOrder").put(systemName[i],(double) i);
         }
 
         variables.put("washer", new HashMap<String, Double>());

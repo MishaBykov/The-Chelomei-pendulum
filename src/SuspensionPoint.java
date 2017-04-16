@@ -1,14 +1,10 @@
 import java.awt.geom.Point2D;
 import java.util.Map;
 
-public class GetSuspensionPoint {
+public class SuspensionPoint {
     private Map<String, Double> parameters;
 
-    public GetSuspensionPoint(Map<String, Double> parameters) {
-        this.parameters = parameters;
-    }
-
-    public Point2D.Double get(double t) {
+    public static Point2D.Double get(Map<String, Double> parameters, double  t) {
         return new Point2D.Double(
                 parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.sin(parameters.get("nu")),
                 parameters.get("alpha") * Math.sin(parameters.get("theta") * t) * Math.cos(parameters.get("nu"))

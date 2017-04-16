@@ -8,12 +8,10 @@ public class Pendulum {
     private double length;
     private double angle;
     private Point2D.Double suspensionPoint;
-    private GetSuspensionPoint updateSuspensionPoint;
     private Map<String,Double> variables;
     private Map<String,Double> parameters;
 
-    public Pendulum(String nameVariables, GetSuspensionPoint getSuspensionPoint, Values values, double t, Color color) {
-        this.updateSuspensionPoint = getSuspensionPoint;
+    public Pendulum(String nameVariables, SuspensionPoint suspensionPoint, Values values, double t, Color color) {
         variables = values.getVariables(nameVariables);
         parameters = values.getParameters();
 
@@ -57,6 +55,6 @@ public class Pendulum {
     public void update(double t) {
         setAngle(variables.get("phi"));
         setLength(parameters.get("l"));
-        setSuspensionPoint(updateSuspensionPoint.get(t));
+        setSuspensionPoint(SuspensionPoint.get(parameters, t));
     }
 }

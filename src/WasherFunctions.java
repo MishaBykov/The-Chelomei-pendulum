@@ -7,11 +7,10 @@ import java.util.Map;
  */
 public class WasherFunctions implements Functions {
     private String nameVariables = "washer";
-    private Map<String, Double> variables;
     private Map<String, Double> parameters;
+
     public WasherFunctions(Values values) {
         parameters = values.getParameters();
-        variables = values.getVariables(nameVariables);
     }
 
     @Override
@@ -22,13 +21,19 @@ public class WasherFunctions implements Functions {
     /**
      * args[0] = x
      * args[1] = y
+     * args[0] = dotX
+     * args[1] = dotY
      */
     @Override
     public double getResultFunction(double t, int id, double ... args) {
         switch (id) {
             case 0:
-                return 0;
+                return args[0];
             case 1:
+                return args[1];
+            case 2:
+                return 0;
+            case 3:
                 return -parameters.get("g");
             default:
                 return -1;
@@ -37,7 +42,7 @@ public class WasherFunctions implements Functions {
 
     @Override
     public int getCountFunctions() {
-        return 2;
+        return 4;
     }
 }
 

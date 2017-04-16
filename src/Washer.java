@@ -10,13 +10,13 @@ public class Washer {
     private Values values;
     private Map<String, Double> variables;
     private Boolean crashSystem;
-    private GetSuspensionPoint updateSuspensionPoint;
+    private SuspensionPoint updateSuspensionPoint;
 
-    public Washer(CrashSystem crashSystem, String nameVariables, GetSuspensionPoint getSuspensionPoint, Values values, double t, Color color) {
+    public Washer(CrashSystem crashSystem, String nameVariables, SuspensionPoint suspensionPoint, Values values, double t, Color color) {
         this.crashSystem = crashSystem.isCrash();
         variables = values.getVariables(nameVariables);
         this.color = color;
-        updateSuspensionPoint = getSuspensionPoint;
+        updateSuspensionPoint = suspensionPoint;
         update(t);
     }
 
