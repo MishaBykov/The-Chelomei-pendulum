@@ -18,40 +18,45 @@ import java.util.Map;
  */
 public class Values {
     private static Values instance;
+
     private Map<String, Double> parameters;
     private Map<String, Map<String, Double>> variables;
+    private Map<String, String[]> namesVariables;
 
     private Values() {
-
-        String[] parametersName = new String[]{"I0", "I1", "m", "l", "k1", "k2", "M", "g", "alpha", "nu", "theta"};
-        double[] parametersValue = new double[]{ 1 ,   1 ,  1 ,  2 ,   1 ,   1 ,  1 , 9.8,      0 ,   0 ,      0 };
-
-        String[] systemName = new String[]{"x", "phi", "dotX", "dotPhi"};
-        double[] systemValue = new double[]{1,    1,      1,      1};
-
-        String[] washerName = new String[]{"x", "y", "dotX", "dotY"};
-        double[] washerValue = new double[]{0,   0,     0,      0};
-
+        variables = new HashMap<String, Map<String, Double>>();
         parameters = new HashMap<String, Double>();
-        for (int i = 0; i < parametersName.length; i++) {
-            parameters.put(parametersName[i], parametersValue[i]);
-        }
 
-        variables = new HashMap<String, Map<String, Double> > ();
+        Map<String, Double> variableSystem = new HashMap<String, Double>();
+        Map<String, Double> variableWasher = new HashMap<String, Double>();
 
-        variables.put("system", new HashMap<String, Double>());
-        variables.put("systemOrder", new HashMap<String, Double>());
-        for (int i = 0; i < systemName.length; i++) {
-            variables.get("system").put(systemName[i], systemValue[i]);
-            variables.get("systemOrder").put(systemName[i],(double) i);
-        }
+        parameters.put("I0", 1.0);
+        parameters.put("I1", 1.0);
+        parameters.put("m", 1.0);
+        parameters.put("l", 1.0);
+        parameters.put("k1", 1.0);
+        parameters.put("k2", 1.0);
+        parameters.put("M", 1.0);
+        parameters.put("g", 9.8);
+        parameters.put("alpha", 0.1);
+        parameters.put("nu", 100.0);
+        parameters.put("theta", 1.0);
 
-        variables.put("washer", new HashMap<String, Double>());
-        variables.put("washerOrder", new HashMap<String, Double>());
-        for (int i = 0; i < washerName.length; i++) {
-            variables.get("washer").put(washerName[i], washerValue[i]);
-            variables.get("washerOrder").put(washerName[i],(double) i);
-        }
+        variableSystem.put("x", 1.0);
+        variableSystem.put("phi", 1.0);
+        variableSystem.put("dotX", 1.0);
+        variableSystem.put("dotPhi", 1.0);
+        variables.put(Config.getNameSystem(), variableSystem);
+
+        variableWasher.put("x", 0.0);
+        variableWasher.put("y", 0.0);
+        variableWasher.put("dotX", 0.0);
+        variableWasher.put("dotY", 0.0);
+        variables.put(Config.getNameWasher(), variableWasher);
+
+        namesVariables.put(Config.getOrderSystem(), new String[]{"x", "phi", "dotX", "dotPhi"});
+
+        namesVariables.put(Config.getOrderWasher(), new String[]{"x", "y", "dotX", "dotY"});
     }
 
     public static Values getInstance() {
@@ -61,11 +66,29 @@ public class Values {
         return instance;
     }
 
-    public Map<String, Double> getParameters() {
+    public Map<String, Double> getParameters(){
         return parameters;
     }
 
-    public Map<String, Double> getVariables(String nameVariables) {
-        return variables.get(nameVariables);
+    public Double getVariable(String nameGroups, String nameVariable) {
+        return variables.get(nameGroups).get(nameVariable);
+    }
+
+    public void setParameter(String nameParameter, Double newValue) {
+        parameters.put(nameParameter, newValue);
+    }
+
+    public void setVariable(String nameGroups, String nameVariable, Double newValue) {
+        if (nameVariable.charAt(0) == 'x' && newValue < 0 && nameGroups.equals(Config.getNameSystem())
+                && variables.get(Config.getNameSystem()).get("dotX") < 0) {
+            variables.get(Config.getNameSystem()).put("dotX", 0.0);
+            variables.get(nameGroups).put(nameVariable, 0.0);
+        } else {
+            variables.get(nameGroups).put(nameVariable, newValue);
+        }
+    }
+
+    public String[] getNamesVariables(String nameVariable) {
+        return namesVariables.get(nameVariable);
     }
 }

@@ -2,6 +2,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Config {
+    private static String nameSystem = "s";
+    private static String namePendulum = "p";
+
+    private static String systemOrder = "so";
+    private static String pendulumOrder = "po";
+
     private static double widthWasher = 0.1;
     private static double heightWasher = 0.1;
     private static double scale = 100;
@@ -48,5 +54,21 @@ public class Config {
 
     public static double getWidthWasher() {
         return widthWasher;
+    }
+
+    public static String getNameSystem() {
+        return nameSystem;
+    }
+
+    public static String getNameWasher() {
+        return namePendulum;
+    }
+
+    public static String getOrderSystem() {
+        return systemOrder;
+    }
+
+    public static String getOrderWasher() {
+        return pendulumOrder;
     }
 }

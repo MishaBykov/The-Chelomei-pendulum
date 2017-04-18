@@ -4,17 +4,18 @@ import java.util.Map;
 
 public class Washer {
     private Point2D.Double centerWasher;
-
     private Color color;
 
-    private Map<String, Double> variables;
+    private Values values;
     private Map<String, Double> parameters;
-    private Boolean crashSystem;
+    String nameVariables;
+    private CrashSystem crashSystem;
 
     public Washer(CrashSystem crashSystem, Functions functions, Values values, double t, Color color) {
-        this.crashSystem = crashSystem.isCrash();
-        variables = values.getVariables(functions.getNameVariables());
+        this.crashSystem = crashSystem;
+        this.values = values;
         this.parameters = values.getParameters();
+        nameVariables = functions.getNameVariables();
         this.color = color;
         update(t);
     }
@@ -40,21 +41,21 @@ public class Washer {
         this.color = color;
     }
 
-    public void setFunctions(Values values, Functions functions) {
-        variables = values.getVariables(functions.getNameVariables());
+    public void setFunctions(Functions functions) {
+        nameVariables = functions.getNameVariables();
     }
 
 
     public void update(double t) {
-        if (crashSystem) {
-            centerWasher = Tools.findTwoPoint(
-                    Tools.suspensionPoint(parameters, t),
-                    variables.get("x") + Config.getHeightWasher() / 2,
-                    variables.get("phi")
-            );
+        if (crashSystem.isCrash()) {
+            setCenterWasher(values.getVariable(nameVariables, "x"), values.getVariable(nameVariables, "y"));
         }
         else {
-            setCenterWasher(variables.get("x"), variables.get("y"));
+            centerWasher = Tools.findTwoPoint(
+                    Tools.suspensionPoint(parameters, t),
+                    values.getVariable(nameVariables, "x") + Config.getHeightWasher() / 2,
+                    values.getVariable(nameVariables, "phi")
+            );
         }
     }
 }

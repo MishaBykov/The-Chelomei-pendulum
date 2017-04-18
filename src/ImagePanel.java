@@ -63,7 +63,6 @@ public class ImagePanel extends JComponent implements ActionListener {
                 aRk4List.toStep();
             }
             i--;
-            crashSystem.setCrashSystem();
             if (crashSystem.isCrash())
                 crashSystem.systemToCrash(rk4List, washer);
         }

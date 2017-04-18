@@ -3,18 +3,17 @@ import java.awt.geom.*;
 import java.util.Map;
 
 public class Pendulum {
+    private Functions functions;
+    private Values values;
     private Color color;
 
     private double length;
     private double angle;
     private Point2D.Double suspensionPoint;
-    private Map<String,Double> variables;
-    private Map<String,Double> parameters;
 
     public Pendulum(Functions functions, Values values, double t, Color color) {
-        variables = values.getVariables(functions.getNameVariables());
-        parameters = values.getParameters();
-
+        this.functions = functions;
+        this.values = values;
         this.color = color;
 
         update(t);
@@ -53,8 +52,8 @@ public class Pendulum {
     }
 
     public void update(double t) {
-        setAngle(variables.get("phi"));
-        setLength(parameters.get("l"));
-        setSuspensionPoint(Tools.suspensionPoint(parameters, t));
+        setAngle(values.getVariable(functions.getNameVariables(), "phi"));
+        setLength(values.getParameters().get("l"));
+        setSuspensionPoint(Tools.suspensionPoint(values.getParameters(), t));
     }
 }
