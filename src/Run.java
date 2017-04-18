@@ -4,17 +4,19 @@ import java.util.ArrayList;
 
 public class Run {
     public static void main(String[] args) {
-        Values values = new Values();
-        Functions system = new SystemFunctions(values);
-        CrashSystem crashSystem = new CrashSystem(values);
-        Pendulum pendulum = new Pendulum(system, values, 0, Color.magenta);
-        Washer washer = new Washer(system, values, 0, Color.black);
-        RK4 RK4 = new RK4(system, values, 0.0, Config.getStep());
-        final ImagePanel imagePanel = new ImagePanel(crashSystem, pendulum, washer,
-                RK4, 500, 500, Config.getSpeedDown());
-        ArrayList<SliderText> sliderTexts = SliderText.initMSliderText(new ArrayList<SliderText>(),
-                values.getVariables("system"));
-        sliderTexts = SliderText.initMSliderText(sliderTexts, values.getParameters());
+        Functions system = new SystemFunctions(Values.getInstance());
+        Pendulum pendulum = new Pendulum(system, Values.getInstance(), 0, Color.magenta);
+        Washer washer = new Washer(CrashSystem.getInstance(Values.getInstance()),system, Values.getInstance(), 0, Color.black);
+        RK4 rk4 = new RK4(system, Values.getInstance(), 0.0, Config.getStep());
+        final ImagePanel imagePanel = new ImagePanel(
+                CrashSystem.getInstance(), pendulum, washer,rk4, 500, 500, Config.getSpeedDown()
+        );
+        ArrayList<SliderText> sliderTexts = SliderText.initSliderTexts(
+                new ArrayList<SliderText>(), Values.getInstance().getVariables("system")
+        );
+        sliderTexts = SliderText.initSliderTexts(
+                sliderTexts, Values.getInstance().getParameters()
+        );
         final PanelButton panelButton = new PanelButton(imagePanel, sliderTexts);
         final JPanel panelSliderText = new JPanel(new GridLayout(0, 2));
         for (SliderText sliderText : sliderTexts) {
@@ -37,4 +39,3 @@ public class Run {
     }
 
 }
-

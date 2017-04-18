@@ -65,7 +65,7 @@ public class ImagePanel extends JComponent implements ActionListener {
             i--;
             crashSystem.setCrashSystem();
             if (crashSystem.isCrash())
-                crashSystem.systemToCrash(rk4List, pendulum, washer);
+                crashSystem.systemToCrash(rk4List, washer);
         }
         time[0] = time[1];
 
@@ -88,10 +88,10 @@ public class ImagePanel extends JComponent implements ActionListener {
                 new Line2D.Double(
                         toSystem(pendulum.getSuspensionPoint()),
                         toSystem(
-                                Config.findTwoPoint(
-                                pendulum.getSuspensionPoint(),
-                                pendulum.getLength(),
-                                pendulum.getAngle()
+                                Tools.findTwoPoint(
+                                    pendulum.getSuspensionPoint(),
+                                    pendulum.getLength(),
+                                    pendulum.getAngle()
                                 )
                         )
                 )

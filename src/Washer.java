@@ -11,9 +11,9 @@ public class Washer {
     private Map<String, Double> parameters;
     private Boolean crashSystem;
 
-    public Washer(CrashSystem crashSystem, String nameVariables, Values values, double t, Color color) {
+    public Washer(CrashSystem crashSystem, Functions functions, Values values, double t, Color color) {
         this.crashSystem = crashSystem.isCrash();
-        variables = values.getVariables(nameVariables);
+        variables = values.getVariables(functions.getNameVariables());
         this.parameters = values.getParameters();
         this.color = color;
         update(t);
@@ -39,6 +39,11 @@ public class Washer {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public void setFunctions(Values values, Functions functions) {
+        variables = values.getVariables(functions.getNameVariables());
+    }
+
 
     public void update(double t) {
         if (crashSystem) {
