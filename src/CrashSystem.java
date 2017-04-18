@@ -28,8 +28,8 @@ public class CrashSystem {
     public void systemToCrash(List<RK4> rk4List) {
         double t = rk4List.get(0).getT();
         double angle = variablesSystem.get("phi");
-        Point2D.Double pointWasher = Config.findTwoPoint(
-                SuspensionPoint.get(parameters, t),
+        Point2D.Double pointWasher = Tools.findTwoPoint(
+                Tools.suspensionPoint(parameters, t),
                 x + Config.getHeightWasher() / 2,
                 angle
         );

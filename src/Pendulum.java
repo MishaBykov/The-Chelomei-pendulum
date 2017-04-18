@@ -11,7 +11,7 @@ public class Pendulum {
     private Map<String,Double> variables;
     private Map<String,Double> parameters;
 
-    public Pendulum(String nameVariables, SuspensionPoint suspensionPoint, Values values, double t, Color color) {
+    public Pendulum(String nameVariables, Values values, double t, Color color) {
         variables = values.getVariables(nameVariables);
         parameters = values.getParameters();
 
@@ -55,6 +55,6 @@ public class Pendulum {
     public void update(double t) {
         setAngle(variables.get("phi"));
         setLength(parameters.get("l"));
-        setSuspensionPoint(SuspensionPoint.get(parameters, t));
+        setSuspensionPoint(Tools.suspensionPoint(parameters, t));
     }
 }

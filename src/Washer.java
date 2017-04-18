@@ -7,16 +7,15 @@ public class Washer {
 
     private Color color;
 
-    private Values values;
     private Map<String, Double> variables;
+    private Map<String, Double> parameters;
     private Boolean crashSystem;
-    private SuspensionPoint updateSuspensionPoint;
 
-    public Washer(CrashSystem crashSystem, String nameVariables, SuspensionPoint suspensionPoint, Values values, double t, Color color) {
+    public Washer(CrashSystem crashSystem, String nameVariables, Values values, double t, Color color) {
         this.crashSystem = crashSystem.isCrash();
         variables = values.getVariables(nameVariables);
+        this.parameters = values.getParameters();
         this.color = color;
-        updateSuspensionPoint = suspensionPoint;
         update(t);
     }
 
@@ -43,8 +42,8 @@ public class Washer {
 
     public void update(double t) {
         if (crashSystem) {
-            centerWasher = Config.findTwoPoint(
-                    updateSuspensionPoint.get(t),
+            centerWasher = Tools.findTwoPoint(
+                    Tools.suspensionPoint(parameters, t),
                     variables.get("x") + Config.getHeightWasher() / 2,
                     variables.get("phi")
             );

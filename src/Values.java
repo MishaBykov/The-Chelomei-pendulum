@@ -17,11 +17,11 @@ import java.util.Map;
  * k2x' — сила трения шайбы о стержень,                                             <br>
  */
 public class Values {
+    private static Values instance;
     private Map<String, Double> parameters;
     private Map<String, Map<String, Double>> variables;
 
-
-    public Values() {
+    private Values() {
 
         String[] parametersName = new String[]{"I0", "I1", "m", "l", "k1", "k2", "M", "g", "alpha", "nu", "theta"};
         double[] parametersValue = new double[]{ 1 ,   1 ,  1 ,  2 ,   1 ,   1 ,  1 , 9.8,      0 ,   0 ,      0 };
@@ -52,6 +52,13 @@ public class Values {
             variables.get("washer").put(washerName[i], washerValue[i]);
             variables.get("washerOrder").put(washerName[i],(double) i);
         }
+    }
+
+    public static Values getInstance() {
+        if (instance == null) {
+            instance = new Values();
+        }
+        return instance;
     }
 
     public Map<String, Double> getParameters() {
