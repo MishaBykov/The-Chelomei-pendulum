@@ -11,16 +11,24 @@ public class Run {
         final ImagePanel imagePanel = new ImagePanel(
                 CrashSystem.getInstance(), pendulum, washer,rk4, 500, 500, Config.getSpeedDown()
         );
-        ArrayList<SliderText> sliderTexts = SliderText.initSliderTexts(
-                new ArrayList<SliderText>(), Values.getInstance().getVariable(Config.getNameSystem(),)
+
+        SliderText[] sliderTextVariables = SliderText.initSliderTexts(
+                Values.getInstance().getNamesVariables(Config.getNameSystem()), Config.getNameSystem()
         );
-        sliderTexts = SliderText.initSliderTexts(
-                sliderTexts, Values.getInstance().getParameters()
+        SliderText[] sliderTextParameters = SliderText.initSliderTexts(
+                Values.getInstance().getNamesParameters()
         );
-        final PanelButton panelButton = new PanelButton(imagePanel, sliderTexts);
-        final JPanel panelSliderText = new JPanel(new GridLayout(0, 2));
-        for (SliderText sliderText : sliderTexts) {
-            panelSliderText.add(sliderText);
+
+        final JPanel panelSliderTextVariable = new JPanel(new GridLayout(0, 2));
+        final JPanel panelSliderTextParameters = new JPanel(new GridLayout(0, 2));
+
+        final PanelButton panelButton = new PanelButton(imagePanel, sliderTextVariables, sliderTextParameters);
+
+        for (SliderText sliderText : sliderTextVariables) {
+            panelSliderTextVariable.add(sliderText);
+        }
+        for (SliderText sliderText : sliderTextParameters) {
+            panelSliderTextParameters.add(sliderText);
         }
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -28,7 +36,8 @@ public class Run {
                 final JFrame frame = new JFrame("The Chelomei pendulum");
                 JPanel all = new JPanel();
                 all.add(imagePanel);
-                all.add(panelSliderText);
+                all.add(panelSliderTextVariable);
+                all.add(panelSliderTextParameters);
                 all.add(panelButton);
                 frame.getContentPane().add(all);
                 frame.setSize(1050, 740);

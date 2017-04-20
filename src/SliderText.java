@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class SliderText extends JPanel {
 
@@ -9,18 +10,22 @@ public class SliderText extends JPanel {
 
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
-    private Map<String, Double> groups;
+    EditValue edf;
+    private String nameVariable;
     private String name;
     private double scale;
 
-    private SliderText(Map<String, Double> groups, String name, double scale) {
+    private SliderText(EditValue f, String nameVariable, String name, double scale) {
         super(new FlowLayout(FlowLayout.LEFT));
-        this.scale = scale;
+
+        this.edf = f;
+        this.nameVariable = nameVariable;
         this.name = name;
-        this.groups = groups;
+        this.scale = scale;
+
         this.add(new JLabel(name));
 
-        textField.setText(Double.toString(groups.get(name)));
+        textField.setText(Double.toString(edf.getValue(name)));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
         this.add(textField);
@@ -85,7 +90,7 @@ public class SliderText extends JPanel {
 
     void resetParameter(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
-            groups.put(name, Double.parseDouble(textField.getText()));
+            edf.setValue(Double.parseDouble(textField.getText()), name, nameVariable);
         }
     }
 
@@ -93,39 +98,63 @@ public class SliderText extends JPanel {
 //  I2, m, L, k1, k2,
 //  M, alpha, theta, nu
 
-    public static ArrayList<SliderText> initSliderTexts(ArrayList<SliderText> sliderTexts, Map<String, Double> groups) {
-        Set<String> keys = groups.keySet();
-        Map<String, Double> scales = Config.getScaleSlider();
-        for (String key : keys) {
-            sliderTexts.add(new SliderText(groups, key, scales.get(key)));
+    public static SliderText[] initSliderTexts(String[] names){
+        SliderText[] result = new SliderText[names.length];
+        for (int i=0;i< names.length;i++) {
+            result[i] = new SliderText(new EditParameter(), null, names[i], Config.getScaleSlider().get(names[i]));
         }
-        /*
-        mSL[0] = new SliderText(functions, 0, "x", 1);
-        mSL[1] = new SliderText(functions, 1, "phi", 1);
-        mSL[2] = new SliderText(functions, 2, "dotX", 1);
-        mSL[3] = new SliderText(functions, 3, "dotPhi", 1);
-        mSL[4] = new SliderText(functions, 4, "I1", 1);
-        mSL[5] = new SliderText(functions, 5, "I2", 1);
-        mSL[6] = new SliderText(functions, 6, "m", 1);
-        mSL[7] = new SliderText(functions, 7, "L", 1);
-        mSL[8] = new SliderText(functions, 8, "k1", 1);
-        mSL[9] = new SliderText(functions, 9, "k2", 1);
-        mSL[10] = new SliderText(functions, 10, "M", 1);
-        mSL[11] = new SliderText(functions, 11, "g", 1);
-        mSL[12] = new SliderText(functions, 12, "alpha", 1);
-        mSL[14] = new SliderText(functions, 13, "nu", 1);
-        mSL[13] = new SliderText(functions, 14, "theta", 1);
+        return result;
+    }
 
-        mSL[0].slider.setVisible(false);
-        mSL[1].slider.setVisible(false);
-        mSL[2].slider.setVisible(false);
-        mSL[4].slider.setMaximum(500);
-        mSL[8].slider.setMaximum(314);
-        mSL[4].textField.setText("" + functions.getParameters(7));
-        mSL[8].textField.setText("" + functions.getParameters(8));
-        */
+    public static SliderText[] initSliderTexts(String[] names, String nameVariable) {
+        SliderText[] result = new SliderText[names.length];
+        for (int i = 0; i < names.length; i++) {
+            result[i] = new SliderText(new EditParameter(), nameVariable, names[i], Config.getScaleSlider().get(names[i]));
+        }
+        return result;
+    }
 
-        return sliderTexts;
+    private interface EditValue{
+        void setValue(double newValue, String ... args);
+        double getValue(String... args);
+    }
+
+    private static class EditParameter implements EditValue{
+        Values values;
+
+        public EditParameter() {
+            values = Values.getInstance();
+        }
+
+
+        @Override
+        public void setValue(double newValue, String... args) {
+            values.setParameter(args[0], newValue);
+        }
+
+        @Override
+        public double getValue(String ... args) {
+            return values.getParameter(args[0]);
+        }
+    }
+
+    private static class EditVariable implements EditValue{
+        Values values;
+
+        public EditVariable() {
+            values = Values.getInstance();
+        }
+
+
+        @Override
+        public void setValue(double newValue, String... args) {
+            values.setVariable(args[1], args[0], newValue);
+        }
+
+        @Override
+        public double getValue(String... args) {
+            return values.getVariable(args[1], args[0]);
+        }
     }
 }
 

@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class PanelButton extends JPanel{
     private ImagePanel imagePanel;
     private final JButton buttonStartStop = new JButton();
     private final JButton buttonReset = new JButton();
-    private ArrayList<SliderText> sliderTexts;
+    private SliderText[][] slidersTexts;
 
     private ActionListener startStop = new ActionListener() {
         private boolean pulsing = false;
@@ -28,16 +27,18 @@ public class PanelButton extends JPanel{
     private ActionListener reset = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (SliderText sliderText : sliderTexts) {
-                sliderText.resetParameter();
+            for (SliderText[] sliderTexts : slidersTexts) {
+                for (SliderText sliderText : sliderTexts) {
+                    sliderText.resetParameter();
+                }
             }
             imagePanel.update();
         }
     };
 
-    public PanelButton(final ImagePanel imagePanel, ArrayList<SliderText> sliderTexts) {
+    public PanelButton(final ImagePanel imagePanel, SliderText[] ... slidersTexts) {
         this.imagePanel = imagePanel;
-        this.sliderTexts = sliderTexts;
+        this.slidersTexts = slidersTexts;
         GridLayout gl = new GridLayout(3, 1);
         gl.setVgap(10);
         this.setLayout(gl);

@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -54,9 +56,9 @@ public class Values {
         variableWasher.put("dotY", 0.0);
         variables.put(Config.getNameWasher(), variableWasher);
 
-        namesVariables.put(Config.getOrderSystem(), new String[]{"x", "phi", "dotX", "dotPhi"});
+        namesVariables.put(Config.getNameSystem(), new String[]{"x", "phi", "dotX", "dotPhi"});
 
-        namesVariables.put(Config.getOrderWasher(), new String[]{"x", "y", "dotX", "dotY"});
+        namesVariables.put(Config.getNameWasher(), new String[]{"x", "y", "dotX", "dotY"});
     }
 
     public static Values getInstance() {
@@ -68,6 +70,10 @@ public class Values {
 
     public Map<String, Double> getParameters(){
         return parameters;
+    }
+
+    public Double getParameter(String nameParameter){
+        return parameters.get(nameParameter);
     }
 
     public Double getVariable(String nameGroups, String nameVariable) {
@@ -90,5 +96,9 @@ public class Values {
 
     public String[] getNamesVariables(String nameVariable) {
         return namesVariables.get(nameVariable);
+    }
+
+    public String[] getNamesParameters() {
+        return (String[]) parameters.keySet().toArray();
     }
 }
