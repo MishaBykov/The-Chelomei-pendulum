@@ -24,6 +24,7 @@ public class PanelButton extends JPanel{
         }
     };
 
+
     private ActionListener reset = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

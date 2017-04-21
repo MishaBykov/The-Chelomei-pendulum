@@ -109,7 +109,7 @@ public class SliderText extends JPanel {
     public static SliderText[] initSliderTexts(String[] names, String nameVariable) {
         SliderText[] result = new SliderText[names.length];
         for (int i = 0; i < names.length; i++) {
-            result[i] = new SliderText(new EditParameter(), nameVariable, names[i], Config.getScaleSlider().get(names[i]));
+            result[i] = new SliderText(new EditVariable(), nameVariable, names[i], Config.getScaleSlider().get(names[i]));
         }
         return result;
     }
