@@ -6,7 +6,7 @@ import java.util.Map;
  */
 
 public class SystemFunctions implements Functions {
-    private String nameVariables = "system";
+    private String nameVariables = Config.getNameSystem();
     private Map<String, Double> parameters;
 //    private Map<String, Double> variables;
 

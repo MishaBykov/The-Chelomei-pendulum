@@ -6,7 +6,7 @@ import java.util.Map;
  *
  */
 public class WasherFunctions implements Functions {
-    private String nameVariables = "washer";
+    private String nameVariables = Config.getNameWasher();
     private Map<String, Double> parameters;
 
     public WasherFunctions(Values values) {

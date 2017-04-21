@@ -27,6 +27,7 @@ public class Values {
 
     private Values() {
         variables = new HashMap<String, Map<String, Double>>();
+        namesVariables = new HashMap<String, String[]>();
         parameters = new HashMap<String, Double>();
 
         Map<String, Double> variableSystem = new HashMap<String, Double>();
