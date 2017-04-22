@@ -33,10 +33,9 @@ public class CrashSystem {
         values.setVariable(Config.getNameWasher(), "y", pointWasher.getY());
         double v = values.getVariable(Config.getNameSystem(), "dotPhi") * values.getParameters().get("l");
         values.setVariable(Config.getNameWasher(), "dotX", v * Math.cos(angle));
-        values.setVariable(Config.getNameWasher(), "dotY", v * Math.cos(angle));
+        values.setVariable(Config.getNameWasher(), "dotY", v * Math.sin(angle));
 
         Functions WF = new WasherFunctions(values);
-        washer.setFunctions(WF);
         washer.toggleUpdate(isCrash());
         rk4List.add(new RK4(WF, values, t, Config.getStep()));
         values.getParameters().put("m", 0.0);

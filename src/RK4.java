@@ -63,5 +63,9 @@ public class RK4 {
     public double getT() {
         return t;
     }
+
+    public void setT(double t) {
+        this.t = t;
+    }
 }
 

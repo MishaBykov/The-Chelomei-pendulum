@@ -9,16 +9,16 @@ public class Washer {
     private Values values;
     private Map<String, Double> parameters;
     private String nameVariables;
-    private CrashSystem crashSystem;
     private UpdateFunction updateFunction;
+    private UpdateFromWasher updateFromWasher = new UpdateFromWasher();
+    private UpdateFromSystem updateFromSystem = new UpdateFromSystem();
 
-    public Washer(CrashSystem crashSystem, Functions functions, Values values, double t, Color color) {
-        this.crashSystem = crashSystem;
+    public Washer(Values values, double t, Color color) {
+        nameVariables = Config.getNameSystem();
         this.values = values;
         this.parameters = values.getParameters();
-        nameVariables = functions.getNameVariables();
         this.color = color;
-        toggleUpdate(crashSystem.isCrash());
+        toggleUpdate(CrashSystem.getInstance().isCrash());
         update(t);
     }
 
@@ -43,16 +43,13 @@ public class Washer {
         this.color = color;
     }
 
-    public void setFunctions(Functions functions) {
-        nameVariables = functions.getNameVariables();
-    }
-
     public void toggleUpdate(boolean crashSystem) {
-        if (crashSystem){
-            updateFunction = new UpdateFromWasher();
-        }
-        else {
-            updateFunction = new UpdateFromSystem();
+        if (crashSystem) {
+            nameVariables = Config.getNameWasher();
+            updateFunction = updateFromWasher;
+        } else {
+            nameVariables = Config.getNameSystem();
+            updateFunction = updateFromSystem;
         }
     }
 

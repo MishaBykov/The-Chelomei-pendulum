@@ -6,7 +6,7 @@ public class Run {
     public static void main(String[] args) {
         Functions system = new SystemFunctions(Values.getInstance());
         Pendulum pendulum = new Pendulum(system, Values.getInstance(), 0, Color.magenta);
-        Washer washer = new Washer(CrashSystem.getInstance(), system, Values.getInstance(), 0, Color.black);
+        Washer washer = new Washer(Values.getInstance(), 0, Color.black);
         RK4 rk4 = new RK4(system, Values.getInstance(), 0.0, Config.getStep());
         final ImagePanel imagePanel = new ImagePanel(
                 CrashSystem.getInstance(), pendulum, washer,rk4, 500, 500, Config.getSpeedDown()

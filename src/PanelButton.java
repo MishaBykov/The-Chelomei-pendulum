@@ -33,7 +33,10 @@ public class PanelButton extends JPanel{
                     sliderText.resetValue();
                 }
             }
-            imagePanel.getWasher().toggleUpdate(true);
+            imagePanel.getWasher().toggleUpdate(false);
+            if (imagePanel.getRk4List().size() > 1)
+                imagePanel.getRk4List().remove(1);
+            imagePanel.getRk4List().get(0).setT(0);
             imagePanel.update();
         }
     };
