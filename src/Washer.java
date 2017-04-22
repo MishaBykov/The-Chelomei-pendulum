@@ -8,8 +8,9 @@ public class Washer {
 
     private Values values;
     private Map<String, Double> parameters;
-    String nameVariables;
+    private String nameVariables;
     private CrashSystem crashSystem;
+    private UpdateFunction updateFunction;
 
     public Washer(CrashSystem crashSystem, Functions functions, Values values, double t, Color color) {
         this.crashSystem = crashSystem;
@@ -17,6 +18,7 @@ public class Washer {
         this.parameters = values.getParameters();
         nameVariables = functions.getNameVariables();
         this.color = color;
+        toggleUpdate(crashSystem.isCrash());
         update(t);
     }
 
@@ -45,17 +47,42 @@ public class Washer {
         nameVariables = functions.getNameVariables();
     }
 
-
-    public void update(double t) {
-        if (crashSystem.isCrash()) {
-            setCenterWasher(values.getVariable(nameVariables, "x"), values.getVariable(nameVariables, "y"));
+    public void toggleUpdate(boolean crashSystem) {
+        if (crashSystem){
+            updateFunction = new UpdateFromWasher();
         }
         else {
-            centerWasher = Tools.findTwoPoint(
-                    Tools.suspensionPoint(parameters, t),
-                    values.getVariable(nameVariables, "x") + Config.getHeightWasher() / 2,
-                    values.getVariable(nameVariables, "phi")
+            updateFunction = new UpdateFromSystem();
+        }
+    }
+
+    public void update(double t) {
+        updateFunction.update(t);
+    }
+    
+    private interface UpdateFunction{
+        void update(double t);
+    } 
+    
+    private class UpdateFromSystem implements UpdateFunction {
+
+        @Override
+        public void update(double t) {
+            setCenterWasher(
+                    Tools.findTwoPoint(
+                            Tools.suspensionPoint(parameters, t),
+                            values.getVariable(nameVariables, "x") + Config.getHeightWasher() / 2,
+                            values.getVariable(nameVariables, "phi")
+                    )
             );
+        }
+    }
+
+    private class UpdateFromWasher implements UpdateFunction{
+
+        @Override
+        public void update(double t) {
+            setCenterWasher(values.getVariable(nameVariables, "x"), values.getVariable(nameVariables, "y"));
         }
     }
 }

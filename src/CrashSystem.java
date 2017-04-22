@@ -6,6 +6,7 @@ import java.util.Map;
 public class CrashSystem {
     private static CrashSystem  instance;
 
+    private boolean crash;
     private Values values;
 
     private CrashSystem(){
@@ -16,10 +17,11 @@ public class CrashSystem {
         if (instance == null) {
             instance = new CrashSystem();
         }
+        instance.update();
         return instance;
     }
 
-    public void systemToCrash(List<RK4> rk4List, Washer washer) {
+    private void systemToCrash(List<RK4> rk4List, Washer washer) {
         double t = rk4List.get(0).getT();
         double angle = values.getVariable(Config.getNameSystem(), "phi");
         Point2D.Double pointWasher = Tools.findTwoPoint(
@@ -35,11 +37,23 @@ public class CrashSystem {
 
         Functions WF = new WasherFunctions(values);
         washer.setFunctions(WF);
+        washer.toggleUpdate(isCrash());
         rk4List.add(new RK4(WF, values, t, Config.getStep()));
         values.getParameters().put("m", 0.0);
     }
 
     public Boolean isCrash() {
-        return values.getParameters().get("l") < values.getVariable(Config.getNameSystem(), "x");
+        return crash;
+    }
+
+    private void update() {
+        crash = values.getParameters().get("l") < values.getVariable(Config.getNameSystem(), "x");
+    }
+
+    public void update(List<RK4> rk4List, Washer washer){
+        crash = values.getParameters().get("l") < values.getVariable(Config.getNameSystem(), "x");
+        if (crash){
+            systemToCrash(rk4List, washer);
+        }
     }
 }

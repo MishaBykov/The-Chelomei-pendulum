@@ -10,10 +10,11 @@ public class SliderText extends JPanel {
 
     private final JSlider slider = new JSlider();
     private final JTextField textField = new JTextField();
-    EditValue edf;
+    private EditValue edf;
     private String nameVariable;
     private String name;
     private double scale;
+    private Values values;
 
     private SliderText(EditValue f, String nameVariable, String name, double scale) {
         super(new FlowLayout(FlowLayout.LEFT));
@@ -22,10 +23,10 @@ public class SliderText extends JPanel {
         this.nameVariable = nameVariable;
         this.name = name;
         this.scale = scale;
-
+        values = Values.getInstance();
         this.add(new JLabel(name));
 
-        textField.setText(Double.toString(edf.getValue(name)));
+        textField.setText(Double.toString(edf.getValue(name, nameVariable)));
         textField.getDocument().addDocumentListener(dl);
         textField.setPreferredSize(new Dimension(70, 26));
         this.add(textField);
@@ -88,7 +89,7 @@ public class SliderText extends JPanel {
         }
     };
 
-    void resetParameter(){
+    void resetValue(){
         if ((textField.getText().matches("^\\d+\\.\\d+$")) || (textField.getText().matches("^\\d+$"))) {
             edf.setValue(Double.parseDouble(textField.getText()), name, nameVariable);
         }
@@ -144,7 +145,6 @@ public class SliderText extends JPanel {
         public EditVariable() {
             values = Values.getInstance();
         }
-
 
         @Override
         public void setValue(double newValue, String... args) {

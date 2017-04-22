@@ -3,10 +3,10 @@ import java.util.Map;
 
 public class Config {
     private static String nameSystem = "s";
-    private static String namePendulum = "p";
+    private static String nameWasher= "w";
 
     private static String systemOrder = "so";
-    private static String pendulumOrder = "po";
+    private static String washerOrder = "wo";
 
     private static double widthWasher = 0.1;
     private static double heightWasher = 0.1;
@@ -65,7 +65,7 @@ public class Config {
     }
 
     public static String getNameWasher() {
-        return namePendulum;
+        return nameWasher;
     }
 
     public static String getOrderSystem() {
@@ -73,6 +73,6 @@ public class Config {
     }
 
     public static String getOrderWasher() {
-        return pendulumOrder;
+        return washerOrder;
     }
 }

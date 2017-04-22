@@ -30,9 +30,10 @@ public class PanelButton extends JPanel{
         public void actionPerformed(ActionEvent e) {
             for (SliderText[] sliderTexts : slidersTexts) {
                 for (SliderText sliderText : sliderTexts) {
-                    sliderText.resetParameter();
+                    sliderText.resetValue();
                 }
             }
+            imagePanel.getWasher().toggleUpdate(true);
             imagePanel.update();
         }
     };

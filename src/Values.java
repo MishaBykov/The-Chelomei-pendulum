@@ -100,6 +100,6 @@ public class Values {
     }
 
     public String[] getNamesParameters() {
-        return (String[]) parameters.keySet().toArray();
+        return parameters.keySet().toArray(new String[parameters.keySet().size()]);
     }
 }
