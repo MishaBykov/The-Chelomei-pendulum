@@ -31,9 +31,12 @@ public class CrashSystem {
         );
         values.setVariable(Config.getNameWasher(), "x", pointWasher.getX());
         values.setVariable(Config.getNameWasher(), "y", pointWasher.getY());
-        double v = values.getVariable(Config.getNameSystem(), "dotPhi") * values.getParameters().get("l");
-        values.setVariable(Config.getNameWasher(), "dotX", v * Math.cos(angle));
-        values.setVariable(Config.getNameWasher(), "dotY", v * Math.sin(angle));
+        double v_x = values.getVariable(Config.getNameSystem(), "dotPhi")
+                * values.getParameters().get("l") * (-Math.cos(angle))
+                + values.getVariable(Config.getNameSystem(), "dotX") * -Math.sin(angle);
+        double v_y = values.getVariable(Config.getNameSystem(), "dotX") * Math.cos(angle);
+        values.setVariable(Config.getNameWasher(), "dotX", v_x);
+        values.setVariable(Config.getNameWasher(), "dotY", v_y);
 
         Functions WF = new WasherFunctions(values);
         washer.toggleUpdate(isCrash());

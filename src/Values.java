@@ -45,9 +45,9 @@ public class Values {
         parameters.put("nu",    0.0);
         parameters.put("theta", 0.0);
 
-        variableSystem.put("x",         1.0);
-        variableSystem.put("phi",       1.0);
-        variableSystem.put("dotX",      1.0);
+        variableSystem.put("x",         0.0);
+        variableSystem.put("phi",       0.1);
+        variableSystem.put("dotX",      6.0);
         variableSystem.put("dotPhi",    1.0);
         variables.put(Config.getNameSystem(), variableSystem);
 

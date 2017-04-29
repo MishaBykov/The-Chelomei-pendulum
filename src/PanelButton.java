@@ -34,6 +34,7 @@ public class PanelButton extends JPanel{
                 }
             }
             imagePanel.getWasher().toggleUpdate(false);
+            CrashSystem.getInstance().update(imagePanel.getRk4List(), imagePanel.getWasher());
             if (imagePanel.getRk4List().size() > 1)
                 imagePanel.getRk4List().remove(1);
             imagePanel.getRk4List().get(0).setT(0);

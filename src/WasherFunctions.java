@@ -21,16 +21,16 @@ public class WasherFunctions implements Functions {
     /**
      * args[0] = x
      * args[1] = y
-     * args[0] = dotX
-     * args[1] = dotY
+     * args[2] = dotX
+     * args[3] = dotY
      */
     @Override
     public double getResultFunction(double t, int id, double ... args) {
         switch (id) {
             case 0:
-                return args[0];
+                return args[2];
             case 1:
-                return args[1];
+                return args[3];
             case 2:
                 return 0;
             case 3:
