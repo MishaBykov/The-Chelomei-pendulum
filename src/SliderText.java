@@ -16,7 +16,7 @@ public class SliderText extends JPanel {
     private double scale;
     private Values values;
 
-    private SliderText(EditValue f, String nameVariable, String name, double scale) {
+    private SliderText(EditValue f, String label, String nameVariable, String name, double scale) {
         super(new FlowLayout(FlowLayout.LEFT));
 
         this.edf = f;
@@ -24,7 +24,7 @@ public class SliderText extends JPanel {
         this.name = name;
         this.scale = scale;
         values = Values.getInstance();
-        this.add(new JLabel(name));
+        this.add(new JLabel(label));
 
         textField.setText(Double.toString(edf.getValue(name, nameVariable)));
         textField.getDocument().addDocumentListener(dl);
@@ -100,17 +100,19 @@ public class SliderText extends JPanel {
 //  M, alpha, theta, nu
 
     public static SliderText[] initSliderTexts(String[] names){
+        Map<String , String > nameLabels = Config.getNameLabels();
         SliderText[] result = new SliderText[names.length];
         for (int i=0;i< names.length;i++) {
-            result[i] = new SliderText(new EditParameter(), null, names[i], Config.getScaleSlider().get(names[i]));
+            result[i] = new SliderText(new EditParameter(), /*nameLabels.get(*/names[i]/*)*/, null,  names[i], Config.getScaleSlider().get(names[i]));
         }
         return result;
     }
 
     public static SliderText[] initSliderTexts(String[] names, String nameVariable) {
+        Map<String , String > nameLabels = Config.getNameLabels();
         SliderText[] result = new SliderText[names.length];
         for (int i = 0; i < names.length; i++) {
-            result[i] = new SliderText(new EditVariable(), nameVariable, names[i], Config.getScaleSlider().get(names[i]));
+            result[i] = new SliderText(new EditVariable(), /*nameLabels.get(*/names[i]/*)*/, nameVariable, names[i], Config.getScaleSlider().get(names[i]));
         }
         return result;
     }

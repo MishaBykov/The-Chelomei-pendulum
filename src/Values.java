@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/*
+/**
  * M — Масса стержня,                                                               <br>
  * m — масса шайбы,                                                                 <br>
  * t — время,                                                                       <br>
