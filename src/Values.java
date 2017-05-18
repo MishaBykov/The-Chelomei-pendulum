@@ -36,19 +36,19 @@ public class Values {
         parameters.put("I0",    1.0);
         parameters.put("I1",    1.0);
         parameters.put("m",     1.0);
-        parameters.put("l",     1.0);
-        parameters.put("k1",    1.0);
-        parameters.put("k2",    1.0);
-        parameters.put("M",     1.0);
+        parameters.put("l",     2.0);
+        parameters.put("k1",    10.0);
+        parameters.put("k2",    5.0);
+        parameters.put("M",     0.1);
         parameters.put("g",     9.8);
-        parameters.put("alpha", 0.0);
-        parameters.put("nu",    0.0);
+        parameters.put("alpha", 0.1);
+        parameters.put("nu",    127.0);
         parameters.put("theta", 0.0);
 
         variableSystem.put("x",         0.0);
         variableSystem.put("phi",       0.1);
-        variableSystem.put("dotX",      6.0);
-        variableSystem.put("dotPhi",    1.0);
+        variableSystem.put("dotX",      0.0);
+        variableSystem.put("dotPhi",    0.0);
         variables.put(Config.getNameSystem(), variableSystem);
 
         variableWasher.put("x",     0.0);
