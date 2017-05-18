@@ -58,11 +58,11 @@ public class SystemFunctions implements Functions {
     private double f(int id, double t) {
         switch (id) {
             case 1:
-                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
-                        * Math.sin( parameters.get("nu") * t);
+                return -parameters.get("alpha") * Math.pow(parameters.get("nu"), 2) * Math.cos(parameters.get("theta"))
+                        * Math.sin(parameters.get("nu") * t);
             case 2:
-                return -Math.pow( parameters.get("nu"), 2) *  parameters.get("alpha") * Math.sin( parameters.get("theta"))
-                        * Math.cos( parameters.get("nu") * t);
+                return -parameters.get("alpha") * Math.pow(parameters.get("nu"), 2) * Math.sin(parameters.get("theta"))
+                        * Math.sin(parameters.get("nu") * t);
             default:
                 return -1;
         }
@@ -74,3 +74,12 @@ public class SystemFunctions implements Functions {
     }
 
 }
+
+/*
+parameters[6] = alpha;
+parameters[7] = nu;
+parameters[8] = theta;
+
+-alpha * Math.pow(nu, 2) * Math.cos(theta) * Math.sin(nu * t)
+-alpha * Math.pow(nu, 2) * Math.sin(theta) * Math.sin(nu * t)
+*/
