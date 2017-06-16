@@ -11,8 +11,9 @@ public class Config {
     private static double widthWasher = 0.1;
     private static double heightWasher = 0.1;
     private static double scale = 100;
-    private static int speedDown = 10;
-    private static double step = 1.0 / (speedDown * 10);
+    private static int delayTimer = 10;
+    private static double stepRK4 = 0.01;
+    private static int countStepRK4 = 4;
 
     private static Map<String, Double> scaleSlider;
     private static Map<String, String> nameLabels;
@@ -64,16 +65,16 @@ public class Config {
         return nameLabels;
     }
 
-    public static double getStep() {
-        return step;
+    public static double getStepRK4() {
+        return stepRK4;
     }
 
     public static double getScale() {
         return scale;
     }
 
-    public static int getSpeedDown() {
-        return speedDown;
+    public static int getDelayTimer() {
+        return delayTimer;
     }
 
     public static double getHeightWasher() {
@@ -100,7 +101,9 @@ public class Config {
         return washerOrder;
     }
 
-
+    public static int getCountStepRK4() {
+        return countStepRK4;
+    }
 }
 
 /*

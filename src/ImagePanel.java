@@ -14,14 +14,15 @@ public class ImagePanel extends JComponent implements ActionListener {
     private Washer washer;
     private ArrayList<RK4> rk4List = new ArrayList<>();
     private CrashSystem crashSystem;
+    private int countStepRK4;
 
     private long[] time = new long[2];
 
-
-    public ImagePanel(CrashSystem crashSystem, Pendulum pendulum, Washer washer, RK4 rk4, int height, int width, int delay) {
+    public ImagePanel(CrashSystem crashSystem, Pendulum pendulum, Washer washer, RK4 rk4, int height, int width, int countStepRK4, int delay) {
         this.crashSystem = crashSystem;
         this.pendulum = pendulum;
         this.washer = washer;
+        this.countStepRK4 = countStepRK4;
         this.rk4List.add(rk4);
         timer = new Timer(delay, this);
         this.width = width;
@@ -57,10 +58,12 @@ public class ImagePanel extends JComponent implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         time[1] = System.currentTimeMillis();
-        long i = (time[1] - time[0])/ Config.getSpeedDown();
+        long i = (time[1] - time[0])/ timer.getDelay();
         while (i > 0) {
             for (RK4 aRk4List : rk4List) {
-                aRk4List.toStep();
+                for (int j=0; j < countStepRK4; j++) {
+                    aRk4List.toStep();
+                }
             }
             i--;
             if (!crashSystem.isCrash()) {
@@ -115,6 +118,10 @@ public class ImagePanel extends JComponent implements ActionListener {
     }
 
     public Washer getWasher() {
+        return washer;
+    }
+
+    public Washer setDelayTimer() {
         return washer;
     }
 }

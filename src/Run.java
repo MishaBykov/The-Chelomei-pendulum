@@ -1,15 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Run {
     public static void main(String[] args) {
         Functions system = new SystemFunctions(Values.getInstance());
         Pendulum pendulum = new Pendulum(system, Values.getInstance(), 0, Color.green);
         Washer washer = new Washer(Values.getInstance(), 0, Color.RED);
-        RK4 rk4 = new RK4(system, Values.getInstance(), 0.0, Config.getStep());
+        RK4 rk4 = new RK4(system, Values.getInstance(), 0.0, Config.getStepRK4());
         final ImagePanel imagePanel = new ImagePanel(
-                CrashSystem.getInstance(), pendulum, washer,rk4, 500, 500, Config.getSpeedDown()
+                CrashSystem.getInstance(), pendulum, washer, rk4,
+                500, 500, Config.getCountStepRK4(), Config.getDelayTimer()
         );
 
         SliderText[] sliderTextVariables = SliderText.initSliderTexts(

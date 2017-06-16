@@ -1,9 +1,5 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 public class RK4 {
-    private double h, t;
+    private double step, t;
     private double[][] k;
     private Functions functions;
     private Values values;
@@ -23,7 +19,7 @@ public class RK4 {
         this.values = values;
         this.functions = functions;
         this.t = t;
-        h = step;
+        this.step = step;
     }
 
     public void toStep() {
@@ -31,7 +27,7 @@ public class RK4 {
             for (int j = 0; j < namesVariables.length; j++) {
                 valueVariables[j] = values.getVariable(functions.getNameVariables(), namesVariables[j]);
             }
-            k[0][i] = h * functions.getResultFunction(t, i, valueVariables);
+            k[0][i] = step * functions.getResultFunction(t, i, valueVariables);
         }
 
         for (int i = 1; i < 3; i++) {
@@ -40,7 +36,7 @@ public class RK4 {
                     valueVariables[i1] =
                             values.getVariable(functions.getNameVariables(), namesVariables[i1]) + k[i - 1][i1] / 2;
                 }
-                k[i][j] = h * functions.getResultFunction(t + h / 2, j, valueVariables);
+                k[i][j] = step * functions.getResultFunction(t + step / 2, j, valueVariables);
             }
         }
 
@@ -48,7 +44,7 @@ public class RK4 {
             for (int i1 = 0; i1 < namesVariables.length; i1++) {
                 valueVariables[i1] = values.getVariable(functions.getNameVariables(), namesVariables[i1]) + k[2][i1];
             }
-            k[3][i] = h * functions.getResultFunction(t + h, i, valueVariables);
+            k[3][i] = step * functions.getResultFunction(t + step, i, valueVariables);
         }
 
         for (int i = 0; i < namesVariables.length; i++) {
@@ -57,7 +53,7 @@ public class RK4 {
                     + 1.0 / 6 * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]));
         }
 
-        t += h;
+        t += step;
     }
 
     public double getT() {
@@ -66,6 +62,10 @@ public class RK4 {
 
     public void setT(double t) {
         this.t = t;
+    }
+
+    public void setStep(double step) {
+        this.step = step;
     }
 }
 
