@@ -40,7 +40,7 @@ public class CrashSystem {
 
         Functions WF = new WasherFunctions(values);
         washer.toggleUpdate(isCrash());
-        rk4List.add(new RK4(WF, values, t, Config.getStep()));
+        rk4List.add(new RK4(WF, values, t, Config.getStepRK4()));
         values.getParameters().put("m", 0.0);
     }
 

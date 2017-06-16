@@ -103,7 +103,10 @@ public class SliderText extends JPanel {
         Map<String , String > nameLabels = Config.getNameLabels();
         SliderText[] result = new SliderText[names.length];
         for (int i=0;i< names.length;i++) {
-            result[i] = new SliderText(new EditParameter(), /*nameLabels.get(*/names[i]/*)*/, null,  names[i], Config.getScaleSlider().get(names[i]));
+            result[i] = new SliderText(
+                    new EditParameter(), /*nameLabels.get(*/names[i]/*)*/, null,
+                    names[i], Config.getScaleSlider().get(names[i])
+            );
         }
         return result;
     }

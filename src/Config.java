@@ -12,8 +12,8 @@ public class Config {
     private static double heightWasher = 0.1;
     private static double scale = 100;
     private static int delayTimer = 10;
-    private static double stepRK4 = 0.01;
-    private static int countStepRK4 = 4;
+    private static double stepRK4 = 0.0001;
+    private static int countStepRK4 = 100;
 
     private static Map<String, Double> scaleSlider;
     private static Map<String, String> nameLabels;

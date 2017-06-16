@@ -87,6 +87,7 @@ public class ImagePanel extends JComponent implements ActionListener {
         g2d.drawLine(dx, 0, dy, height);
 
         g2d.setColor(pendulum.getColor());
+        g2d.setStroke(new BasicStroke(10.0f));  // толщина равна 10
         g2d.draw(
                 new Line2D.Double(
                         toSystem(pendulum.getSuspensionPoint()),
@@ -101,7 +102,7 @@ public class ImagePanel extends JComponent implements ActionListener {
         );
 
         g2d.setColor(washer.getColor());
-        g2d.fill(new Ellipse2D.Double(
+        g2d.draw(new Ellipse2D.Double(
                 toSystem(washer.getCenterWasher()).getX()- Config.getWidthWasher()/2 * Config.getScale(),
                 toSystem(washer.getCenterWasher()).getY()- Config.getHeightWasher()/2 * Config.getScale(),
 
