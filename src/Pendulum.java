@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.Map;
 
 public class Pendulum {
     private Functions functions;

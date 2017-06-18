@@ -1,10 +1,5 @@
-import java.awt.geom.Point2D;
-import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- */
 public class WasherFunctions implements Functions {
     private String nameVariables = Config.getNameWasher();
     private Map<String, Double> parameters;
